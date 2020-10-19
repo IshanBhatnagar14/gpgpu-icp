@@ -1,18 +1,12 @@
 =================== GPGPU Iterative Closest Point Algorithm ==========
 
-
-
-TDL:
+# TDL
 
 -> Set a working Build System (Makefile)
 -> Apprendre a utiliser la lib PCL
 -> Ebaucher le main.cpp
 
-
-Repartition:
-  -> leastsqaure 
-
-
+# EPITAS
 ETAPE 1: get_correspondence_indices()
 ETAPE 2: center_data()
 ETAPE 3: compute_cross_covariance()
@@ -22,12 +16,11 @@ ETAPE 6: icp_least_squares() + prepare_system()
 ETAPE 7: compute_normals() + plot_normals()
 ETAPE 8: RotationMatrix()
 ETAPE 9: icp_normal() + prepare_system_normals()
-ETAPE 10: kernel() 
+ETAPE 10: kernel()
 
-Bon Chance 
+Bon Chance
 
-
-Resource:
+# Resource
 
 A detailed Python implementation (Jupyter notebook)
 https://github.com/niosus/notebooks/blob/master/icp.ipynb
@@ -39,8 +32,7 @@ PCL Tutorial: How to use iterative closest point
 https://pcl.readthedocs.io/projects/tutorials/en/latest/iterative_closest_point.html
 
 
-
---> GROUPE F : La WatiZamen Team
+# GROUPE F : La WatiZamen Team
 
 Chow William
  DoriAn Vinai
