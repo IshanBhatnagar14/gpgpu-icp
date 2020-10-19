@@ -13,6 +13,20 @@ Repartition:
   -> leastsqaure 
 
 
+ETAPE 1: get_correspondence_indices()
+ETAPE 2: center_data()
+ETAPE 3: compute_cross_covariance()
+ETAPE 4: icp_svd()
+ETAPE 5: jacobian, error, dr, R, etc
+ETAPE 6: icp_least_squares() + prepare_system()
+ETAPE 7: compute_normals() + plot_normals()
+ETAPE 8: RotationMatrix()
+ETAPE 9: icp_normal() + prepare_system_normals()
+ETAPE 10: kernel() 
+
+Bon Chance 
+
+
 Resource:
 
 A detailed Python implementation (Jupyter notebook)
