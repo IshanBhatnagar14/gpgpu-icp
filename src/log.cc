@@ -14,20 +14,21 @@ void init_logs()
 }
 
 Log::Log(std::string tag)
-    : tag_{tag}
-    , error_{false}
-{}
+    : tag_{ tag }
+    , error_{ false }
+{
+}
 
 Log::Log(std::string tag, bool error)
-    : tag_{tag}
-    , error_{error}
-{}
-
-std::ostream& Log::operator<<(std::string message)
+    : tag_{ tag }
+    , error_{ error }
 {
-    if (Log::display)
-    {
-        std::ostream& s = std::clog << "[";
+}
+
+std::ostream &Log::operator<<(std::string message)
+{
+    if (Log::display) {
+        std::ostream &s = std::clog << "[";
         if (error_)
             s << "\033[1;31m";
         else
