@@ -20,5 +20,6 @@ class Points {
   public:
     Points(std::string path);
     vec_p getPoints() const;
+    friend std::ostream &operator<<(std::ostream &os, const Vect3f &v);
     void add_point(Vect3f v);
 };
