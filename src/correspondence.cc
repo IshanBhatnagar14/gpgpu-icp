@@ -6,7 +6,7 @@
 std::vector<size_t> find_correspondences(Points scene, Points model)
 {
     vec_p s = scene.getPoints();
-    vec_p m = scene.getPoints();
+    vec_p m = model.getPoints();
 
     size_t size_s = s.size();
     size_t size_m = m.size();
