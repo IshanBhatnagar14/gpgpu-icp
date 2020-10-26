@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 
 class Vect3f {
@@ -15,5 +16,7 @@ class Points {
     std::vector<Vect3f> points;
 
   public:
+    Points(std::string path);
+    std::vector<Vect3f> getPoints() const;
     void add_point(Vect3f v);
 };
