@@ -3,6 +3,7 @@
 
 #include "log.hh"
 #include "points.hh"
+#include "aligment.hh"
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +22,12 @@ int main(int argc, char *argv[])
     /*for (auto v : dataset.getPoints()) {
         std::cout << v;
     }*/
+
+    /* test moyenne payet
+    Points payet("data/data_students/perso.txt");
+    Vect3f m = mean(payet);
+    l << " "<<  m.x << " " << m.y << " " << m.z; 
+    */
 
     return 0;
 }

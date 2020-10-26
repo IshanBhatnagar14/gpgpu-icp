@@ -1,5 +1,6 @@
 #include "aligment.hh"
 
+#include <iostream>
 Vect3f mean(Points points)
 {
     Vect3f m(0,0,0);
