@@ -1,6 +1,6 @@
 CC=g++
 CXXFLAGS=-Wall -Wextra -pedantic -std=c++17 -Iinclude -g
-SRC=src/main.cc src/log.cc
+SRC=src/main.cc src/log.cc src/aligment.cc
 BIN=gpgpu-icp
 
 all:
