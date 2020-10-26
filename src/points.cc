@@ -31,7 +31,7 @@ Points::Points(std::string path)
         }
 
         Vect3f v(std::stof(vect[0]), std::stof(vect[1]), std::stof(vect[2]));
-        add_point(v);
+        addPoint(v);
     }
 
     file.close();
@@ -42,11 +42,9 @@ std::vector<Vect3f> Points::getPoints() const
     return points;
 }
 
-std::ostream &operator<<(std::ostream &os, const Vect3f &v)
+void Points::addPoint(Vect3f v)
 {
-    os << "{ x:" << v.x << ", y:" << v.y << ", z:" << v.z << "}" << std::endl;
-
-    return os;
+    this->points.push_back(v);
 }
 
 Vect3f::Vect3f(float x, float y, float z)
@@ -56,7 +54,9 @@ Vect3f::Vect3f(float x, float y, float z)
     this->z = z;
 }
 
-void Points::add_point(Vect3f v)
+std::ostream &operator<<(std::ostream &os, const Vect3f &v)
 {
-    this->points.push_back(v);
+    os << "{ x:" << v.x << ", y:" << v.y << ", z:" << v.z << "}" << std::endl;
+
+    return os;
 }
