@@ -11,12 +11,14 @@ class Vect3f {
     float z;
 };
 
+typedef std::vector<Vect3f> vec_p;
+
 class Points {
   private:
-    std::vector<Vect3f> points;
+    vec_p points;
 
   public:
     Points(std::string path);
-    std::vector<Vect3f> getPoints() const;
+    vec_p getPoints() const;
     void add_point(Vect3f v);
 };
