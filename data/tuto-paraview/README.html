@@ -1,0 +1,100 @@
+<h1 id="using-paraview-to-display-and-transform-simple-point-clouds">Using Paraview to display and transform simple point clouds</h1>
+<p><strong>J. Chazalon — 2020-09-17</strong></p>
+<p>This short tutorial contains two sections:</p>
+<ol type="1">
+<li>How to display simple point clouds?</li>
+<li>How to apply a transformation to a point cloud and generate a new text file?</li>
+</ol>
+<h2 id="how-to-display-simple-point-clouds">How to display simple point clouds?</h2>
+<p>This section will teach you how to visualize in 3D the content of a simple line of point coordinates.</p>
+<h3 id="input-file">Input file</h3>
+<p>Here, we are talking about CSV files which look like this:</p>
+<pre><code>$ head bun000.txt
+Points_0,Points_1,Points_2
+-0.06325,0.0359793,0.0420873
+-0.06275,0.0360343,0.0425949
+-0.0645,0.0365101,0.0404362
+-0.064,0.0366195,0.0414512
+-0.0635,0.0367289,0.0424662
+-0.063,0.0367836,0.0429737
+-0.0625,0.0368247,0.0433543
+-0.062,0.0368657,0.0437349
+-0.0615,0.0369067,0.0441155</code></pre>
+<ul>
+<li>Files contain a variable number of lines.</li>
+<li>The first line is a header, and other lines are point coordinates.</li>
+<li>Point coordinates are separated by commas (<code>,</code>) and are written in dot-separated float format.</li>
+<li>The range of possible values for the coordinates is unconstrained here.</li>
+</ul>
+<h3 id="open-paraview">Open Paraview</h3>
+<p>You can download this great software from the <a href="https://www.paraview.org/download/">official page</a>, then just extract the archive and launch the binary <code>bin/paraview</code>. This should give you this window.</p>
+<figure>
+<img src="00-paraviewbasewindow.png" width="1024" alt="" /><figcaption>Paraview main windows</figcaption>
+</figure>
+<h3 id="open-a-csv-file-containing-coordinates">Open a CSV file containing coordinates</h3>
+<p>Press <kbd>Ctrl</kbd>+<kbd>O</kbd> (Linux) to open a CSV file containing coordinates. You get the following window.</p>
+<figure>
+<img src="01-openfile.png" alt="" /><figcaption>Open file windows</figcaption>
+</figure>
+<h3 id="select-and-apply-the-csv-parsing-options">Select and apply the CSV parsing options</h3>
+<p>In order to interpret the CSV content properly, you need to tell Paraview what is the field delimiter (<code>,</code> here) and whether the first line is a header (yes). The default parameters should be correct in our case.</p>
+<p>Then, you can press the “Apply” button to validate the import, as illustrated below.</p>
+<figure>
+<img src="02-applycsvparsingoptions.png" width="1024" alt="" /><figcaption>Select and apply CSV parsing options</figcaption>
+</figure>
+<h3 id="the-spreadsheet-view-opens">The spreadsheet view opens</h3>
+<p>You should now have a new spreadsheet view active, as illustrated below. This is because Paraview doesn’t know yet how to render the content of this file. You can either keep the spreadsheet view or close it. It is easy to create new views on demand.</p>
+<figure>
+<img src="03-spreadsheetviewopens.png" width="1024" alt="" /><figcaption>The spreadsheet view</figcaption>
+</figure>
+<h3 id="add-a-tabular-to-points-filter">Add a Tabular to Points filter</h3>
+<p>In order to create an internal point representation that can be displayed, we need to add a “Tabular to Points” filter. To add a filter, press <kbd>Ctrl</kbd>+<kbd>Space</kbd> (Linux) or use the “Filters”&gt;“Search…” menu entry. In the search window, start typing “Tab to p…” to restrict the list of filters, then select the appropriate one, as illustrated below.</p>
+<figure>
+<img src="04-addfiltertabtopoints.png" alt="" /><figcaption>Add a Tabular to Points filter</figcaption>
+</figure>
+<h3 id="configure-the-filter">Configure the filter</h3>
+<p>We need to specify which columns of the tabular data will be mapped to X, Y and Z coordinates. Then, we need to click the “Apply” button to activate the new data filter in our pipeline, as illustrated below.</p>
+<figure>
+<img src="05-applycolmapping.png" width="1024" alt="" /><figcaption>Configure and activate the new filter</figcaption>
+</figure>
+<h3 id="display-the-point-cloud">Display the point cloud</h3>
+<p>We are now ready to display the point cloud. First, make sure you select the render view (click on it), as illustrated below.</p>
+<figure>
+<img src="06-focusonrenderview.png" width="1024" alt="" /><figcaption>Select the render view</figcaption>
+</figure>
+<p>Then, you need to click on the small eye icon on the left side of the last filter we created in our pipeline to display our point cloud, as illustrated below.</p>
+<figure>
+<img src="07-displaydata.png" width="1024" alt="" /><figcaption>Display the point cloud</figcaption>
+</figure>
+<h2 id="how-to-apply-a-transformation-to-a-point-cloud-and-generate-a-new-text-file">How to apply a transformation to a point cloud and generate a new text file?</h2>
+<p>This section will teach you how to apply a simple rigid transformation to your point cloud and save it in the same format as the files we provide. This is useful if you want to create more variants of the 3D models we provide, or simply to quickly apply a small transformation on a vary simple point cloud you created by hand. <strong>Indeed, we encourage you to generate very simple point clouds (less than 10 points) to test your algorithms when you implement them.</strong></p>
+<h3 id="add-a-filter-transform">Add a filter transform</h3>
+<p>We reuse the pipeline from section 1 here: we need a set of points to process. Then, we add a “Transform” filter. To add such filter, press <kbd>Ctrl</kbd>+<kbd>Space</kbd> (Linux) or use the “Filters”&gt;“Search…” menu entry, then start typing the name of the “transform” filter, as illustrated below.</p>
+<figure>
+<img src="08-addfiltertransform.png" alt="" /><figcaption>Add a Transform filter</figcaption>
+</figure>
+<h3 id="define-a-transformation">Define a transformation</h3>
+<p>In order to define the parameters of your transformation, you can either select their values directly (translation in X, Y and Z directions, rotations around X, Y and Z axis) or manipulate the transform box in the render view, as illustrated below. <strong>Avoid creating transforms with scaling different from 1 in any axis: the Iterative Closest Point algorithm does not handle scaling.</strong> After selecting the transform parameters, you need to click the “Apply” button to activate this new filter in our data processing pipeline.</p>
+<figure>
+<img src="09-moveboxandapply.png" width="1024" alt="" /><figcaption>Select and apply transform parameters</figcaption>
+</figure>
+<h3 id="display-both-original-and-transformed-point-clouds">Display both original and transformed point clouds</h3>
+<p>You can display both original and transformed point clouds to check your parameters. To do so, select the render view and click on the eye icon on the left of each of the filters for which you want to display the outputs, as illustrated below.</p>
+<figure>
+<img src="10-displayboth.png" width="1024" alt="" /><figcaption>Display multiple points clouds</figcaption>
+</figure>
+<h3 id="export-the-new-point-cloud">Export the new point cloud</h3>
+<p>To export your new point cloud data, you need to select the spreadsheet view. You can easily create a new spreadsheet view by closing the current view, or by adding a new one: a menu will ask for the kind of view to create. To start the export, you need to click on the export button of the spreadsheet view, as illustrated below.</p>
+<figure>
+<img src="11-selectdatatoexportinspreadsheet.png" width="1024" alt="" /><figcaption>Click on the export button on spreadsheet view</figcaption>
+</figure>
+<p>Then, save the file as either “.txt” or “.csv” file.</p>
+<figure>
+<img src="12-exportdata.png" alt="" /><figcaption>Export data</figcaption>
+</figure>
+<h3 id="finally-fix-the-content-of-the-file">Finally, fix the content of the file</h3>
+<p>By default, Paraview will add extra columns to our file. You can remove those unnecessary columns with a simple <code>cut</code> command, as illustrated below.</p>
+<figure>
+<img src="13-fixoutputformat.png" width="1024" alt="" /><figcaption>Clean the resulting CSV file</figcaption>
+</figure>
+<p><em>You reached the end of this tutorial, we hope it was helpful.</em></p>
