@@ -38,6 +38,11 @@ Points::Points(std::string path)
     file.close();
 }
 
+std::vector<Vect3f> Points::getPoints() const
+{
+    return points;
+}
+
 std::ostream &operator<<(std::ostream &os, const Vect3f &v)
 {
     os << "{ x:" << v.x << ", y:" << v.y << ", z:" << v.z << "}" << std::endl;

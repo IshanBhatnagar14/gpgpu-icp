@@ -17,5 +17,6 @@ class Points {
 
   public:
     Points(std::string path);
+    std::vector<Vect3f> getPoints() const;
     void add_point(Vect3f v);
 };
