@@ -3,6 +3,7 @@
 
 #include "log.hh"
 #include "parser.hh"
+#include "points.hh"
 
 int main(int argc, char *argv[])
 {
