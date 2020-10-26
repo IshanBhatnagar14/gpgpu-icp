@@ -2,7 +2,7 @@
 
 #include <list>
 
-class Vector3f {
+class Point3f {
 public:
   float x;
   float y;
@@ -11,5 +11,5 @@ public:
 
 class Points {
 private:
-  std::vector<Vector3f> points;
+  std::vector<Point3f> points;
 };
