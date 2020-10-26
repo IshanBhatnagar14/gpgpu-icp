@@ -2,9 +2,9 @@
 
 #include <list>
 
-class Point3f {
+class Vect3f {
   public:
-    Point3f(float x, float y, float z);
+    Vect3f(float x, float y, float z);
     float x;
     float y;
     float z;
@@ -12,7 +12,8 @@ class Point3f {
 
 class Points {
   private:
-    std::vector<Point3f> points;
+    std::vector<Vect3f> points;
 
   public:
+    void add_point(Point3f p);
 };
