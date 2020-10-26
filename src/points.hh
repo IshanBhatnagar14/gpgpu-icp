@@ -1,6 +1,6 @@
 #pragma once
 
-#include <list>
+#include <vector>
 
 class Vect3f {
   public:
@@ -15,5 +15,5 @@ class Points {
     std::vector<Vect3f> points;
 
   public:
-    void add_point(Point3f p);
+    void add_point(Vect3f v);
 };
