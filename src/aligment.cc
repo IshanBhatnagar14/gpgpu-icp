@@ -1,4 +1,4 @@
-#include "points.hh"
+#include "aligment.hh"
 
 Vect3f mean(Points points)
 {
