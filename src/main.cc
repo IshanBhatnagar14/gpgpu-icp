@@ -18,5 +18,10 @@ int main(int argc, char *argv[])
 
     Points dataset("data/data_students/cow_ref.txt");
 
+    l << "Parse OK";
+    /*for (auto v : dataset.getPoints()) {
+        std::cout << v;
+    }*/
+
     return 0;
 }

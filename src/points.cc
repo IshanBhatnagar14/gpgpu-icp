@@ -14,14 +14,14 @@ Points::Points(std::string path)
     Log l(__FUNCTION__);
     l << "Loading " << path << std::endl;
 
-    std::vector<Vect3f> points;
-
     std::ifstream file(path);
 
     std::string line = "";
-    while (getline(file, line, '\n')) {
-        std::cout << "line:" << line << std::endl;
 
+    // Skip first line
+    getline(file, line, '\n');
+
+    while (getline(file, line, '\n')) {
         std::vector<std::string> vect;
         std::stringstream line_stream(line);
         while (line_stream.good()) {
@@ -30,9 +30,8 @@ Points::Points(std::string path)
             vect.push_back(value);
         }
 
-        Vect3f v(std::stof(vect[0]), 0, 0);
-        //std::cout << v;
-        points.push_back(v);
+        Vect3f v(std::stof(vect[0]), std::stof(vect[1]), std::stof(vect[2]));
+        add_point(v);
     }
 
     file.close();
