@@ -1,9 +1,9 @@
 #include <fstream>
 #include <iostream>
 
+#include "aligment.hh"
 #include "log.hh"
 #include "points.hh"
-#include "aligment.hh"
 
 int main(int argc, char *argv[])
 {
@@ -13,12 +13,12 @@ int main(int argc, char *argv[])
     init_logs();
     Log::display = true;
 
-    Log l(__FUNCTION__);
-    l << "\033[0;33m================= GPGPU ICP =================\033[0m\n";
+    Log l("GPGPU ICP");
+    l.title();
 
     Points dataset("data/data_students/cow_ref.txt");
 
-    l << "Parse OK";
+    l << "Parse OK" << std::endl;
     /*for (auto v : dataset.getPoints()) {
         std::cout << v;
     }*/
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     /* test moyenne payet
     Points payet("data/data_students/perso.txt");
     Vect3f m = mean(payet);
-    l << " "<<  m.x << " " << m.y << " " << m.z; 
+    l << " "<<  m.x << " " << m.y << " " << m.z;
     */
 
     return 0;

@@ -10,14 +10,16 @@ void init_logs();
 
 class Log
 {
-public:
+  public:
     static bool display;
     Log(std::string tag);
     Log(std::string tag, bool error);
 
-    std::ostream& operator<<(std::string message);
+    void title();
 
-private:
+    std::ostream &operator<<(std::string message);
+
+  private:
     std::string tag_;
     bool error_;
 };

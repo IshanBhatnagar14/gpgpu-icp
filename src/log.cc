@@ -25,6 +25,14 @@ Log::Log(std::string tag, bool error)
 {
 }
 
+void Log::title()
+{
+    if (Log::display) {
+        std::clog << "\033[0;33m==================== " << tag_
+                  << " ====================\033[0m" << std::endl;
+    }
+}
+
 std::ostream &Log::operator<<(std::string message)
 {
     if (Log::display) {

@@ -9,9 +9,13 @@
 
 #include "log.hh"
 
+/*
+** Points
+*/
+
 Points::Points(std::string path)
 {
-    Log l(__FUNCTION__);
+    Log l("Parsing");
     l << "Loading " << path << std::endl;
 
     std::ifstream file(path);
@@ -31,32 +35,39 @@ Points::Points(std::string path)
         }
 
         Vect3f v(std::stof(vect[0]), std::stof(vect[1]), std::stof(vect[2]));
-        addPoint(v);
+        this->addPoint(v);
     }
 
     file.close();
 }
 
-std::vector<Vect3f> Points::getPoints() const
-{
-    return points;
-}
-
 void Points::addPoint(Vect3f v)
 {
-    this->points.push_back(v);
+    this->points_.push_back(v);
 }
 
-Vect3f::Vect3f(float x, float y, float z)
+size_t Points::size()
 {
-    this->x = x;
-    this->y = y;
-    this->z = z;
+    return this->points_.size();
+}
+
+Vect3f &Points::operator[](int i)
+{
+    return this->points_[i];
+}
+
+/*
+** Vect3f
+*/
+
+Vect3f::Vect3f(float x, float y, float z)
+    : x{ x }
+    , y{ y }
+    , z{ z }
+{
 }
 
 std::ostream &operator<<(std::ostream &os, const Vect3f &v)
 {
-    os << "{ x:" << v.x << ", y:" << v.y << ", z:" << v.z << "}" << std::endl;
-
-    return os;
+    return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
 }
