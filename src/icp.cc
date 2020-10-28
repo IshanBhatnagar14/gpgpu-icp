@@ -3,24 +3,34 @@
 #include <limits.h>
 #include <math.h>
 
+#include "log.hh"
+
 //s, R, t, err
 alignment_t find_alignment(Points scene, Points model)
 {
+    Log l(__FUNCTION__);
     alignment_t alignment;
 
     Vect3f mu_scene = get_mean(scene);
     Vect3f mu_model = get_mean(model);
+    l << "mu ok" << std::endl;
 
     Points scene_prime = create_prime(scene, mu_scene);
     Points model_prime = create_prime(model, mu_model);
+    l << "primes ok" << std::endl;
 
     Matrix quaternion = get_quaternion_matrix(scene_prime, model_prime);
+    l << "quaternion ok" << std::endl;
 
     float scale = get_scaling_factor(scene_prime, model_prime);
+    l << "Scale ok" << std::endl;
     Matrix rotation = get_rotation_matrix(quaternion);
+    l << "Rotation ok" << std::endl;
     Vect3f translation =
         get_transational_offset(mu_scene, mu_model, scale, rotation);
+    l << "Transaltion ok" << std::endl;
     float error = 0;
+    l << "Error ok" << std::endl;
 
     alignment.push_back(scale);
     alignment.push_back(rotation);

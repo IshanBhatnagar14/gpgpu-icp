@@ -16,9 +16,14 @@ int main(int argc, char *argv[])
     Log l("GPGPU ICP");
     l.title();
 
-    Points dataset("data/data_students/cow_ref.txt");
+    Points scene("data/data_students/cow_ref.txt");
+    Points model("data/data_students/cow_tr1.txt");
 
     l << "Parse OK" << std::endl;
+
+    find_alignment(scene, model);
+
+    l << "find_aligment() OK" << std::endl;
     /*for (auto v : dataset.getPoints()) {
         std::cout << v;
     }*/
