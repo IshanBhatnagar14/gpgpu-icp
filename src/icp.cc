@@ -21,7 +21,7 @@ alignment_t find_alignment(Points scene, Points model)
     l << "primes ok" << std::endl;
 
     Matrix quaternion = get_quaternion_matrix(scene_prime, model_prime);
-    l << "quaternion ok" << std::endl;
+    l << "quaternion: " << quaternion << std::endl;
 
     float scale = get_scaling_factor(scene_prime, model_prime);
     l << "Scale: " << scale << std::endl;
