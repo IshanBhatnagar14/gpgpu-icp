@@ -41,10 +41,8 @@ Points::Points(std::string path)
     file.close();
 }
 
-
 Points::Points()
 {
-
 }
 
 void Points::addPoint(Vect3f v)
@@ -57,7 +55,7 @@ size_t Points::size()
     return this->points_.size();
 }
 
-Vect3f &Points::operator[](int i)
+Vect3f &Points::operator[](size_t i)
 {
     return this->points_[i];
 }

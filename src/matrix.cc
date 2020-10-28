@@ -15,3 +15,8 @@ Matrix::Matrix(size_t size)
     : Matrix(size, size)
 {
 }
+
+std::vector<float> &Matrix::operator[](size_t i)
+{
+    return this->matrix_[i];
+}
