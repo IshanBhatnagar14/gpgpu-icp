@@ -1,4 +1,5 @@
 #include "aligment.hh"
+#include "log.hh"
 
 #include <iostream>
 Vect3f mean(Points points)
@@ -24,7 +25,8 @@ Points create_prime(Points p)
     Points r = Points();
     for (size_t i = 0; i < p.size(); i++) 
     {
-        
+        Vect3f tmp (p[i].x - m.x, p[i].y - m.y, p[i].z - m.z);
+        r.addPoint(tmp);
     }
     return r;
 }
@@ -32,6 +34,10 @@ Points create_prime(Points p)
 
 void find_aligment(Points p, Points y)
 {
+    Log l("Align");
+    
     p = y;
+
+    
     
 }
