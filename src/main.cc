@@ -23,11 +23,7 @@ int main(int argc, char *argv[])
         std::cout << v;
     }*/
 
-    /* test moyenne payet
     Points payet("data/data_students/perso.txt");
-    Vect3f m = mean(payet);
-    l << " "<<  m.x << " " << m.y << " " << m.z;
-    */
-
+    find_aligment(payet, payet);
     return 0;
 }
