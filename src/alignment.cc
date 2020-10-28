@@ -123,7 +123,7 @@ float get_scaling_factor(Points Pprime, Points Yprime)
     return 0;
 }
 
-Vect3f get_transational_offset(Vect3f mu_y, Vect3f mu_p, float s, Matrix R)
+Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, float s, Matrix R)
 {
     return Vect3f(0, 0, 0);
 }
