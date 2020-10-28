@@ -1,4 +1,5 @@
 #include "aligment.hh"
+#include "matrix.hh"
 #include "log.hh"
 
 #include <iostream>
@@ -30,6 +31,33 @@ Points create_prime(Points p, Vect3f m)
     }
     return r;
 }
+
+Matrix rotation_computation(Matrix q)
+{
+    float q0 = q[0][0];
+    float q1 = q[0][1];
+    float q2 = q[1][0];
+    float q3 = q[1][1];
+
+
+    std::vector<float> Qb0 = {q0, -q1, -q2, -q3};
+    std::vector<float> Qb1 = {q1,  q0,  q3, -q2};
+    std::vector<float> Qb2 = {q2, -q3,  q0,  q1};
+    std::vector<float> Qb3 = {q3,  q2, -q1,  q0};
+
+    std::vector<float> Q0 = {q0, -q1, -q2, -q3};
+    std::vector<float> Q1 = {q1,  q0, -q3,  q2};
+    std::vector<float> Q2 = {q2,  q3,  q0, -q1};
+    std::vector<float> Q3 = {q3, -q2,  q1,  q0};
+
+    matrix_t QB = {Qb0, Qb1, Qb2, Qb3};
+    matrix_t Q = {Q0, Q1, Q2, Q3};
+    
+    Matrix r(Q);
+
+    return r;
+}
+
 
 void find_aligment(Points p, Points y)
 {

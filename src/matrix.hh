@@ -11,6 +11,7 @@ class Matrix
 
   public:
     Matrix(size_t size);
+    Matrix(matrix_t m);
     Matrix(size_t width, size_t height);
 
     std::vector<float> &operator[](size_t i);
