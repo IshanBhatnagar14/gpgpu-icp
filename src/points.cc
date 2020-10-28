@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iterator>
+#include <limits>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -69,6 +70,18 @@ Vect3f::Vect3f(float x, float y, float z)
     , y{ y }
     , z{ z }
 {
+}
+
+float &Vect3f::operator[](size_t i)
+{
+    switch (i % 3) {
+    case 0:
+        return x;
+    case 1:
+        return y;
+    default:
+        return z;
+    }
 }
 
 std::ostream &operator<<(std::ostream &os, const Vect3f &v)

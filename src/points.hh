@@ -7,10 +7,11 @@ class Vect3f
 {
   public:
     Vect3f(float x, float y, float z);
-    friend std::ostream &operator<<(std::ostream &os, const Vect3f &v);
     float x;
     float y;
     float z;
+    float &operator[](size_t i);
+    friend std::ostream &operator<<(std::ostream &os, const Vect3f &v);
 };
 
 typedef std::vector<Vect3f> vec_p;
