@@ -12,8 +12,9 @@ alignment_t find_alignment(Points scene, Points model)
     alignment_t alignment;
 
     Vect3f mu_scene = get_mean(scene);
+    l << "mu scene: " << mu_scene << std::endl;
     Vect3f mu_model = get_mean(model);
-    l << "mu ok" << std::endl;
+    l << "mu model: " << mu_model << std::endl;
 
     Points scene_prime = create_prime(scene, mu_scene);
     Points model_prime = create_prime(model, mu_model);
@@ -23,14 +24,14 @@ alignment_t find_alignment(Points scene, Points model)
     l << "quaternion ok" << std::endl;
 
     float scale = get_scaling_factor(scene_prime, model_prime);
-    l << "Scale ok" << std::endl;
+    l << "Scale: " << scale << std::endl;
     Matrix rotation = get_rotation_matrix(quaternion);
     l << "Rotation ok" << std::endl;
     Vect3f translation =
         get_transational_offset(mu_scene, mu_model, scale, rotation);
-    l << "Transaltion ok" << std::endl;
+    l << "Transaltion: " << translation << std::endl;
     float error = 0;
-    l << "Error ok" << std::endl;
+    l << "Error: " << error << std::endl;
 
     alignment.push_back(scale);
     alignment.push_back(rotation);
