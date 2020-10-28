@@ -69,8 +69,13 @@ Matrix rotation_computation(Matrix q)
             }
         }
     }
+    Matrix r3(3,3);
 
-    return r;
+    for (size_t i = 0; i < 3; i++) 
+        for (size_t j = 0; j < 3; j++) 
+            r3[i][j] = r[1 + i][1 + j];
+
+    return r3;
 }
 
 
