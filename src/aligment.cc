@@ -16,3 +16,11 @@ Vect3f mean(Points points)
 
     return m;
 }
+
+
+
+
+void find_aligment(Points p, Points y)
+{
+
+}
