@@ -25,5 +25,5 @@ class Points
     Points();
     void addPoint(Vect3f v);
     size_t size();
-    Vect3f &operator[](int i);
+    Vect3f &operator[](size_t i);
 };
