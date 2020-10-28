@@ -50,10 +50,25 @@ Matrix rotation_computation(Matrix q)
     std::vector<float> Q2 = {q2,  q3,  q0, -q1};
     std::vector<float> Q3 = {q3, -q2,  q1,  q0};
 
-    matrix_t QB = {Qb0, Qb1, Qb2, Qb3};
-    matrix_t Q = {Q0, Q1, Q2, Q3};
+    matrix_t QB_tmp = {Qb0, Qb1, Qb2, Qb3};
+    matrix_t Q_tmp = {Q0, Q1, Q2, Q3};
     
-    Matrix r(Q);
+    Matrix Q(Q_tmp);
+    Matrix QB(QB_tmp);
+    Matrix r(4, 4);
+
+    for (size_t i = 0; i < 4; i++) 
+    {
+        for (size_t j = 0; j < 4; j++) 
+        {
+            r[i][j] = 0;
+            for (size_t k = 0; k < 4; k++)            
+            {
+                //k et i sont inverses pour transposer
+                r[i][j] += QB[k][i] * Q[k][j];             
+            }
+        }
+    }
 
     return r;
 }
