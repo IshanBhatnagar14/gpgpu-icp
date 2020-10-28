@@ -34,7 +34,14 @@ std::vector<size_t> find_correspondences(Points scene, Points model)
     return correspondences;
 }
 
-void apply_alignment()
+/* Points apply_alignment(Points scene, Points moddel, std::vector<size_t> correspondences)
 {
+    size_t size_s = scene.size();
 
-}
+    float scale = 
+    
+    for (size_t i = 0; i < size_s; i++)
+    {
+        Vect3f s_point = scene[i];
+    }
+}*/
