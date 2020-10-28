@@ -3,7 +3,7 @@
 #include "icp.hh"
 #include "log.hh"
 
-Vect3f mean(Points points)
+Vect3f get_mean(Points points)
 {
     Vect3f m(0, 0, 0);
     size_t s = points.size();
@@ -29,7 +29,7 @@ Points create_prime(Points p, Vect3f m)
     return r;
 }
 
-Matrix get_rotation_computation(Matrix q)
+Matrix get_rotation_matrix(Matrix q)
 {
     float q0 = q[0][0];
     float q1 = q[0][1];
@@ -80,7 +80,7 @@ float getSum(Points Pprime, size_t P_idx, Points Yprime, size_t Y_idx)
     return sum;
 }
 
-Matrix getNmatrix(Points Pprime, Points Yprime)
+Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
 {
     float s_xx = getSum(Pprime, 0, Yprime, 0);
     float s_xy = getSum(Pprime, 0, Yprime, 1);
