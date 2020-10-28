@@ -41,6 +41,12 @@ Points::Points(std::string path)
     file.close();
 }
 
+
+Points::Points()
+{
+
+}
+
 void Points::addPoint(Vect3f v)
 {
     this->points_.push_back(v);
