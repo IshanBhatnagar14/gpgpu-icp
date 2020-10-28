@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "aligment.hh"
+#include "icp.hh"
 #include "log.hh"
 #include "points.hh"
 
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
         std::cout << v;
     }*/
 
-    Points payet("data/data_students/perso.txt");
-    find_aligment(payet, payet);
+    //Points payet("data/data_students/perso.txt");
+    //find_aligment(payet, payet);
     return 0;
 }
