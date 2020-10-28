@@ -20,7 +20,7 @@ Vect3f mean(Points points)
 }
 
 
-Points create_prime(Points p)
+Points create_prime(Points p, Vect3f m)
 {
     Points r = Points();
     for (size_t i = 0; i < p.size(); i++) 
@@ -31,13 +31,14 @@ Points create_prime(Points p)
     return r;
 }
 
-
 void find_aligment(Points p, Points y)
 {
     Log l("Align");
-    
-    p = y;
 
+    Vect3f m_p(mean(p));
     
-    
+    Points p_prime = create_prime(p, m_p);
+
+
+    p = y; //a supprimer cest pour enlever les warnings
 }
