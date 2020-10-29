@@ -27,7 +27,7 @@ Points create_prime(Points p, Vect3f mu)
 {
     Points r = Points();
     for (size_t i = 0; i < p.size(); i++) {
-        Vect3f tmp(p[i].x - mu.x, p[i].y - mu.y, p[i].z - m.z);
+        Vect3f tmp(p[i].x - mu.x, p[i].y - mu.y, p[i].z - mu.z);
         r.addPoint(tmp);
     }
     return r;

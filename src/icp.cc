@@ -9,14 +9,14 @@
 #define THRESH 0.00001
 
 //s, R, t, err
-alignment_t find_alignment(Points p, Points y)
+alignment_t find_alignment(Points p, Points y, Points m)
 {
     Log l(__FUNCTION__);
     alignment_t alignment;
 
     Vect3f mu_p = get_mean(p);
     l << "mu p: " << mu_p << std::endl;
-    Vect3f mu_y = get_mean(y);
+    Vect3f mu_y = get_mean(m);
     l << "mu y: " << mu_y << std::endl;
 
     Points p_prime = create_prime(p, mu_p);
@@ -129,7 +129,7 @@ Points apply_alignment(Points p, Points model)
             y.addPoint(model[correspondences[i]]);
         }
 
-        alignment_t alignment = find_alignment(p, y);
+        alignment_t alignment = find_alignment(p, y, model);
 
         float scale = std::get<float>(alignment[0]);
         Matrix rotation = std::get<Matrix>(alignment[1]);
