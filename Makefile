@@ -2,7 +2,7 @@ MAKEFLAGS += --no-print-directory
 EXEC = gpgpu-icp
 DIR = build
 
-.PHONY: all, check, clean
+.PHONY: all, check, clean, run
 
 all: build
 	make -C $(DIR);
