@@ -117,12 +117,17 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
     N[3][2] = s_zy + s_yz;
     N[3][3] = s_zz + s_yy - s_xx;
 
+    Log l(__FUNCTION_);
+    l << "N: " << N;
+
     double M[16] = { N[0][0], N[0][1], N[0][2], N[0][3], N[1][0], N[1][1],
                      N[1][2], N[1][3], N[2][0], N[2][1], N[2][2], N[2][3],
                      N[3][0], N[3][1], N[3][2], N[3][3] };
     Eigen::Matrix4d A_(M);
     Eigen::EigenSolver<Eigen::Matrix4d> es(A_);
     Eigen::MatrixXcd V_eigen = es.eigenvectors();
+
+    l << "V_eigen: " << V_eigen;
 
     Matrix R(2);
     R[0][0] = V_eigen.col(0)[0].real();
@@ -148,13 +153,13 @@ float get_scaling_factor(Points Pprime, Points Yprime)
 
 Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, float s, Matrix R)
 {
-    Vect3f t(mu_y); 
-    for (size_t i = 0; i < 3; i++) 
-        for (size_t j = 0; j < 3; j++) 
+    Vect3f t(mu_y);
+    for (size_t i = 0; i < 3; i++)
+        for (size_t j = 0; j < 3; j++)
             R[i][j] *= s;
 
-    for (size_t i = 0; i < 3; i++) 
-        for (size_t j = 0; j < 3; j++) 
+    for (size_t i = 0; i < 3; i++)
+        for (size_t j = 0; j < 3; j++)
             t[i] -= R[i][j] * mu_p[j];
 
     return t;
@@ -163,26 +168,23 @@ Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, float s, Matrix R)
 float residual_error(Points p, Points y, float s, Matrix r, Vect3f t)
 {
     float err = 0;
-   
-    for (size_t i = 0; i < 3; i++) 
-        for (size_t j = 0; j < 3; j++) 
-            r[i][j] *= s;
-    
-   
-    for (size_t i = 0; i < p.size(); i++)
-    {
-        Vect3f d(0,0,0);
-        Vect3f tmp(0,0,0);
+
+    for (size_t i = 0; i < 3; i++)
         for (size_t j = 0; j < 3; j++)
-        {
+            r[i][j] *= s;
+
+    for (size_t i = 0; i < p.size(); i++) {
+        Vect3f d(0, 0, 0);
+        Vect3f tmp(0, 0, 0);
+        for (size_t j = 0; j < 3; j++) {
             d[j] = y[i][j];
             for (size_t k = 0; k < 3; k++)
                 tmp[j] += r[j][k] * p[i][k];
-            
+
             d[j] -= (tmp[j] + t[j]);
         }
         for (size_t j = 0; j < 3; j++)
-            err += d[j] * d[j];  
+            err += d[j] * d[j];
     }
     return err;
 }
