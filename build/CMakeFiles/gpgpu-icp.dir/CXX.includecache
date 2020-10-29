@@ -22,16 +22,6 @@ icp.hh
 log.hh
 /home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/log.hh
 
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/icp.cc
-icp.hh
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/icp.hh
-limits.h
--
-math.h
--
-log.hh
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/log.hh
-
 /home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/icp.hh
 variant
 -
@@ -42,14 +32,6 @@ matrix.hh
 points.hh
 /home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/points.hh
 
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/log.cc
-log.hh
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/log.hh
-fstream
--
-iomanip
--
-
 /home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/log.hh
 iostream
 -
@@ -58,22 +40,6 @@ memory
 string
 -
 
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/main.cc
-fstream
--
-iostream
--
-icp.hh
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/icp.hh
-log.hh
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/log.hh
-points.hh
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/points.hh
-
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/matrix.cc
-matrix.hh
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/matrix.hh
-
 /home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/matrix.hh
 ostream
 -
@@ -81,26 +47,6 @@ vector
 -
 points.hh
 /home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/points.hh
-
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/points.cc
-points.hh
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/points.hh
-algorithm
--
-fstream
--
-iterator
--
-limits
--
-sstream
--
-string
--
-vector
--
-log.hh
-/home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/log.hh
 
 /home/antoine/Documents/EPITA/GISTRE/GPGPU/gpgpu-icp/src/points.hh
 string

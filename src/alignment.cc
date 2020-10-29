@@ -117,7 +117,7 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
     N[3][2] = s_zy + s_yz;
     N[3][3] = s_zz + s_yy - s_xx;
 
-    Log l(__FUNCTION_);
+    Log l(__FUNCTION__);
     l << "N: " << N;
 
     double M[16] = { N[0][0], N[0][1], N[0][2], N[0][3], N[1][0], N[1][1],
