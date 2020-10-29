@@ -100,7 +100,7 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
     N[0][0] = s_xx + s_yy + s_zz;
     N[0][1] = s_yz - s_zy;
     N[0][2] = s_zx - s_xz;
-    N[0][3] = s_xy + s_yx;
+    N[0][3] = s_xy - s_yx;
 
     N[1][0] = s_yz - s_zy;
     N[1][1] = s_xx - s_zz - s_yy;
@@ -115,7 +115,7 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
     N[3][0] = s_xy - s_yx;
     N[3][1] = s_zx + s_xz;
     N[3][2] = s_zy + s_yz;
-    N[3][3] = s_zz + s_yy - s_xx;
+    N[3][3] = s_zz - s_yy - s_xx;
 
     Log l(__FUNCTION__);
     l << "N: " << N;
