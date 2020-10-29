@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     l << "Parse OK" << std::endl;
 
-    find_alignment(scene, model);
+    apply_alignment(scene, model);
 
     l << "find_aligment() OK" << std::endl;
     /*for (auto v : dataset.getPoints()) {

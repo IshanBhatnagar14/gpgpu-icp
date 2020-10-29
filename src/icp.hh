@@ -8,7 +8,7 @@
 
 typedef std::vector<std::variant<float, Matrix, Vect3f>> alignment_t;
 
-alignment_t find_alignment(Points scene, Points model);
+Points apply_alignment(Points scene, Points model);
 
 Vect3f get_mean(Points points);
 Points create_prime(Points p, Vect3f m);
