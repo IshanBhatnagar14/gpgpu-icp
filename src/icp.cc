@@ -148,17 +148,15 @@ Points apply_alignment(Points scene, Points model)
 
         Vect3f e;
 
-        for (size_t i = 0; i < s_size; i++)
-        {
+        for (size_t i = 0; i < s_size; i++) {
             e.x = model[i].x - scene[i].x;
             e.y = model[i].y - scene[i].y;
             e.z = model[i].z - scene[i].z;
             err += e.x * e.x + e.y * e.y + e.z * e.z;
         }
 
-        l << "Error: " << err << std::endl;
-
         final_err = err / s_size;
+        l << "Error: " << final_err << std::endl;
 
         if (final_err < THRESH) {
             break;
