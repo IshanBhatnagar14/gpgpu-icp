@@ -1,9 +1,7 @@
-=================== GPGPU Iterative Closest Point Algorithm ==========
+GPGPU Iterative Closest Point Algorithm
+=======================================
 
-# TDL
-
-
-# EPITAS
+## EPITAS
 ETAPE 1: get_correspondence_indices()
 ETAPE 2: center_data()
 ETAPE 3: compute_cross_covariance()
@@ -17,8 +15,10 @@ ETAPE 10: kernel()
 
 Bon Chance
 
-# Resource
+## Resource
 
+Matlab implementation
+http://www.sci.utah.edu/~shireen/pdfs/tutorials/Elhabian_ICP09.pdf
 A detailed Python implementation (Jupyter notebook)
 https://github.com/niosus/notebooks/blob/master/icp.ipynb
 A great visualization tool for 3D point clouds
@@ -29,7 +29,7 @@ PCL Tutorial: How to use iterative closest point
 https://pcl.readthedocs.io/projects/tutorials/en/latest/iterative_closest_point.html
 
 
-# GROUPE F : La WatiZamen Team
+## GROUPE F : La WatiZamen Team
 
 Chow William
  DoriAn Vinai
