@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #include "icp.hh"
 #include "log.hh"
@@ -119,7 +120,16 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
 
 float get_scaling_factor(Points Pprime, Points Yprime)
 {
-    return 0;
+    float sp = 0;
+    float d = 0;
+    for (size_t i = 0; i < Yprime.size(); i++)
+    {
+        d += Yprime[i].x * Yprime[i].x + Yprime[i].y * Yprime[i].y 
+           + Yprime[i].z * Yprime[i].z;
+        sp += Pprime[i].x * Pprime[i].x + Pprime[i].y * Pprime[i].y 
+            + Pprime[i].z * Pprime[i].z;       
+    }
+    return std::sqrt(d/sp);
 }
 
 Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, float s, Matrix R)
@@ -128,14 +138,14 @@ Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, float s, Matrix R)
 }
 
 /*
-void find_aligment(Points p, Points y)
-{
-    Log l("Align");
+   void find_aligment(Points p, Points y)
+   {
+   Log l("Align");
 
-    Vect3f m_p(mean(p));
+   Vect3f m_p(mean(p));
 
-    Points p_prime = create_prime(p, m_p);
+   Points p_prime = create_prime(p, m_p);
 
 
-    p = y; //a supprimer cest pour enlever les warnings
-}*/
+   p = y; //a supprimer cest pour enlever les warnings
+   }*/
