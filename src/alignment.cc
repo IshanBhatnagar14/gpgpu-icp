@@ -1,5 +1,8 @@
-#include <iostream>
+#include <Eigen/Core>
+#include <Eigen/Eigenvalues>
+#include <Eigen/SVD>
 #include <cmath>
+#include <iostream>
 
 #include "icp.hh"
 #include "log.hh"
@@ -54,11 +57,10 @@ Matrix get_rotation_matrix(Matrix q)
     Matrix QB(QB_tmp);
     Matrix r(4, 4);
 
-    for (size_t i = 0; i < 4; i++) 
-        for (size_t j = 0; j < 4; j++) 
-        {
+    for (size_t i = 0; i < 4; i++)
+        for (size_t j = 0; j < 4; j++) {
             r[i][j] = 0;
-            for (size_t k = 0; k < 4; k++) 
+            for (size_t k = 0; k < 4; k++)
                 r[i][j] += QB[i][k] * Q[k][j];
         }
 
@@ -115,21 +117,33 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
     N[3][2] = s_zy + s_yz;
     N[3][3] = s_zz + s_yy - s_xx;
 
-    return N;
+    double M[16] = { N[0][0], N[0][1], N[0][2], N[0][3], N[1][0], N[1][1],
+                     N[1][2], N[1][3], N[2][0], N[2][1], N[2][2], N[2][3],
+                     N[3][0], N[3][1], N[3][2], N[3][3] };
+    Eigen::Matrix4d A_(M);
+    Eigen::EigenSolver<Eigen::Matrix4d> es(A_);
+    Eigen::MatrixXcd V_eigen = es.eigenvectors();
+
+    Matrix R(2);
+    R[0][0] = V_eigen.col(0)[0].real();
+    R[0][1] = V_eigen.col(0)[1].real();
+    R[1][0] = V_eigen.col(0)[2].real();
+    R[1][1] = V_eigen.col(0)[3].real();
+
+    return R;
 }
 
 float get_scaling_factor(Points Pprime, Points Yprime)
 {
     float sp = 0;
     float d = 0;
-    for (size_t i = 0; i < Yprime.size(); i++)
-    {
-        d += Yprime[i].x * Yprime[i].x + Yprime[i].y * Yprime[i].y 
-           + Yprime[i].z * Yprime[i].z;
-        sp += Pprime[i].x * Pprime[i].x + Pprime[i].y * Pprime[i].y 
-            + Pprime[i].z * Pprime[i].z;       
+    for (size_t i = 0; i < Yprime.size(); i++) {
+        d += Yprime[i].x * Yprime[i].x + Yprime[i].y * Yprime[i].y +
+             Yprime[i].z * Yprime[i].z;
+        sp += Pprime[i].x * Pprime[i].x + Pprime[i].y * Pprime[i].y +
+              Pprime[i].z * Pprime[i].z;
     }
-    return std::sqrt(d/sp);
+    return std::sqrt(d / sp);
 }
 
 Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, float s, Matrix R)
