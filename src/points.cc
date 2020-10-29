@@ -77,6 +77,11 @@ Vect3f::Vect3f(float x, float y, float z)
 {
 }
 
+Vect3f::Vect3f()
+    : Vect3f(0, 0, 0)
+{
+}
+
 float &Vect3f::operator[](size_t i)
 {
     switch (i % 3) {

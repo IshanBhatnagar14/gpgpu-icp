@@ -7,6 +7,7 @@ class Vect3f
 {
   public:
     Vect3f(float x, float y, float z);
+    Vect3f();
     float x;
     float y;
     float z;
