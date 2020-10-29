@@ -25,6 +25,9 @@ class Points
     Points(std::string path);
     Points();
     void addPoint(Vect3f v);
-    size_t size();
+    size_t size() const;
+    Vect3f operator[](size_t i) const;
     Vect3f &operator[](size_t i);
 };
+
+std::ostream &operator<<(std::ostream &os, const Points &p);

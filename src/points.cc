@@ -51,9 +51,14 @@ void Points::addPoint(Vect3f v)
     this->points_.push_back(v);
 }
 
-size_t Points::size()
+size_t Points::size() const
 {
     return this->points_.size();
+}
+
+Vect3f Points::operator[](size_t i) const
+{
+    return this->points_[i];
 }
 
 Vect3f &Points::operator[](size_t i)
@@ -87,4 +92,12 @@ float &Vect3f::operator[](size_t i)
 std::ostream &operator<<(std::ostream &os, const Vect3f &v)
 {
     return os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+}
+
+std::ostream &operator<<(std::ostream &os, const Points &p)
+{
+    for (size_t i = 0; i < p.size(); i++) {
+        os << std::endl << p[i];
+    }
+    return os;
 }

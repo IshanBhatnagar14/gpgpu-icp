@@ -20,7 +20,9 @@ alignment_t find_alignment(Points scene, Points model)
     l << "mu model: " << mu_model << std::endl;
 
     Points scene_prime = create_prime(scene, mu_scene);
+    l << "scene prime: " << scene_prime << std::endl;
     Points model_prime = create_prime(model, mu_model);
+    l << "model prime: " << model_prime << std::endl;
     l << "primes ok" << std::endl;
 
     Matrix quaternion = get_quaternion_matrix(scene_prime, model_prime);
@@ -120,8 +122,7 @@ Points apply_alignment(Points scene, Points model)
 
         err /= s_size;
 
-        if (err < thresh)
-        {
+        if (err < thresh) {
             break;
         }
     }
