@@ -5,7 +5,8 @@
 
 #include "log.hh"
 
-#define max_iter 1
+#define max_iter 2
+#define thresh 0.00001
 
 //s, R, t, err
 alignment_t find_alignment(Points scene, Points model)
@@ -32,7 +33,7 @@ alignment_t find_alignment(Points scene, Points model)
     Vect3f translation =
         get_transational_offset(mu_scene, mu_model, scale, rotation);
     l << "Translation: " << translation << std::endl;
-    float error = 0;
+    float error = residual_error(scene, model, scale, rotation, translation);
     l << "Error: " << error << std::endl;
 
     alignment.push_back(scale);
@@ -101,6 +102,8 @@ void apply_translation(Points &scene, Vect3f translation)
 //s; R; t
 Points apply_alignment(Points scene, Points model)
 {
+    size_t s_size = scene.size();
+
     for (size_t iter = 0; iter < max_iter; iter++) {
         std::vector<size_t> correspondences =
             find_correspondences(scene, model); // uniquement pour l'erreur
@@ -109,14 +112,18 @@ Points apply_alignment(Points scene, Points model)
         float scale = std::get<float>(alignment[0]);
         Matrix rotation = std::get<Matrix>(alignment[1]);
         Vect3f translation = std::get<Vect3f>(alignment[2]);
+        float err = std::get<float>(alignment[3]);
 
         apply_scale(scene, scale);
         apply_rotation(scene, rotation);
         apply_translation(scene, translation);
-        //err
-        /* if err < thresh
+
+        err /= s_size;
+
+        if (err < thresh)
+        {
             break;
-        */
+        }
     }
     return scene;
 }
