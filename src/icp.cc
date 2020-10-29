@@ -114,6 +114,11 @@ Points apply_alignment(Points scene, Points model)
 
     Log l("Alignment");
 
+    float final_scale = 1;
+    Matrix final_rotation(3);
+    Vect3f final_translation(0, 0, 0);
+    float final_err = 0;
+
     for (size_t iter = 0; iter < MAX_ITER; iter++) {
         l.title();
 
@@ -132,15 +137,29 @@ Points apply_alignment(Points scene, Points model)
         Vect3f translation = std::get<Vect3f>(alignment[2]);
         float err = std::get<float>(alignment[3]);
 
+        final_scale *= scale;
+        final_translation.x += translation.x;
+        final_translation.y += translation.y;
+        final_translation.z += translation.z;
+
         apply_scale(scene, scale);
         apply_rotation(scene, rotation);
         apply_translation(scene, translation);
 
-        err /= s_size;
+        // TODO
+        // COMPUTE E
+        // ERR = ERR + E'*E
 
-        /*if (err < THRESH) {
+        final_err = err / s_size;
+
+        /*if (final_err < THRESH) {
             break;
         }*/
     }
+    l.title();
+    l << "Final scale: " << final_scale << std::endl;
+    l << "Final rotation: TODO" << std::endl;
+    l << "Final translation: " << final_translation << std::endl;
+    l << "Final error: " << final_err << std::endl;
     return scene;
 }
