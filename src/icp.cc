@@ -36,12 +36,10 @@ alignment_t find_alignment(Points scene, Points model)
     for (size_t i = 0; i < 3; i++)
         for (size_t j = 0; j < 3; j++)
             rotation[i][j] *= scale;
-    
+
     l << "Rotation * scale: " << rotation << std::endl;
 
-
-    Vect3f translation =
-        get_transational_offset(mu_scene, mu_model, rotation);
+    Vect3f translation = get_transational_offset(mu_scene, mu_model, rotation);
     l << "Translation: " << translation << std::endl;
     float error = residual_error(scene, model, rotation, translation);
     l << "Error: " << error << std::endl;
@@ -122,9 +120,9 @@ Points apply_alignment(Points scene, Points model)
         std::vector<size_t> correspondences =
             find_correspondences(scene, model);
 
-        Points y(model);
+        Points y;
         for (size_t i = 0; i < model.size(); i++) {
-            y[i] = model[correspondences[i]];
+            y.addPoint(model[correspondences[i]]);
         }
 
         alignment_t alignment = find_alignment(scene, y);

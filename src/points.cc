@@ -42,14 +42,6 @@ Points::Points(std::string path)
     file.close();
 }
 
-Points::Points(const Points &p)
-{
-    for (size_t i = 0; i < p.size(); i++) {
-        Vect3f v(p[i].x, p[i].y, p[i].z);
-        this->addPoint(v);
-    }
-}
-
 Points::Points()
 {
 }
