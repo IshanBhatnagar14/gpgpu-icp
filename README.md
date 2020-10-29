@@ -35,9 +35,10 @@ https://pcl.readthedocs.io/projects/tutorials/en/latest/iterative_closest_point.
 
 
 ## GROUPE F : La WatiZamen Team
-
+```
 Chow William
  DoriAn Vinai
    AnToine Coulon
     VIncent Payet
    LaBonne
+```
