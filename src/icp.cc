@@ -75,8 +75,7 @@ void apply_scale(Points &scene, float scale)
 {
     size_t s_size = scene.size();
 
-    for (size_t i = 0; i < s_size; i++)
-    {
+    for (size_t i = 0; i < s_size; i++) {
         scene[i].x *= scale;
         scene[i].y *= scale;
         scene[i].z *= scale;
@@ -85,7 +84,7 @@ void apply_scale(Points &scene, float scale)
 
 void apply_rotation(Points &scene, Matrix rotation)
 {
-    scene *= rotation;
+    scene = rotation * scene;
 }
 
 void apply_translation(Points &scene, Vect3f translation)

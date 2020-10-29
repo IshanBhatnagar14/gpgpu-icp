@@ -33,7 +33,7 @@ size_t Matrix::getHeight() const
     return height_;
 }
 
-Points &operator*=(Points &points, const Matrix &matrix)
+Points &operator*(const Matrix &matrix, Points &points)
 {
     for (size_t i = 0; i < points.size(); i++) {
         size_t x = points[i].x;
