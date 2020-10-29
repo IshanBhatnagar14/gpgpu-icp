@@ -134,18 +134,41 @@ float get_scaling_factor(Points Pprime, Points Yprime)
 
 Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, float s, Matrix R)
 {
-    return Vect3f(0, 0, 0);
+    Vect3f t(mu_y); 
+    for (size_t i = 0; i < 3; i++) 
+        for (size_t j = 0; j < 3; j++) 
+            R[i][j] *= s;
+
+    for (size_t i = 0; i < 3; i++) 
+        for (size_t j = 0; j < 3; j++) 
+            t[i] -= R[i][j] * mu_p[j];
+
+    return t;
 }
 
-/*
-   void find_aligment(Points p, Points y)
-   {
-   Log l("Align");
-
-   Vect3f m_p(mean(p));
-
-   Points p_prime = create_prime(p, m_p);
-
-
-   p = y; //a supprimer cest pour enlever les warnings
-   }*/
+float residual_error(Points p, Points y, float s, Matrix r, Vect3f t)
+{
+    float err = 0;
+   
+    for (size_t i = 0; i < 3; i++) 
+        for (size_t j = 0; j < 3; j++) 
+            r[i][j] *= s;
+    
+   
+    for (size_t i = 0; i < p.size(); i++)
+    {
+        Vect3f d(0,0,0);
+        Vect3f tmp(0,0,0);
+        for (size_t j = 0; j < 3; j++)
+        {
+            d[j] = y[i][j];
+            for (size_t k = 0; k < 3; k++)
+                tmp[j] += r[j][k] * p[i][k];
+            
+            d[j] -= (tmp[j] + t[j]);
+        }
+        for (size_t j = 0; j < 3; j++)
+            err += d[j] * d[j];  
+    }
+    return err;
+}
