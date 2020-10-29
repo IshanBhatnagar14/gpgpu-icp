@@ -151,13 +151,9 @@ float get_scaling_factor(Points Pprime, Points Yprime)
     return std::sqrt(d / sp);
 }
 
-Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, float s, Matrix R)
+Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y,  Matrix R)
 {
     Vect3f t(mu_y);
-    for (size_t i = 0; i < 3; i++)
-        for (size_t j = 0; j < 3; j++)
-            R[i][j] *= s;
-
     for (size_t i = 0; i < 3; i++)
         for (size_t j = 0; j < 3; j++)
             t[i] -= R[i][j] * mu_p[j];
@@ -165,13 +161,9 @@ Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, float s, Matrix R)
     return t;
 }
 
-float residual_error(Points p, Points y, float s, Matrix r, Vect3f t)
+float residual_error(Points p, Points y, Matrix r, Vect3f t)
 {
     float err = 0;
-
-    for (size_t i = 0; i < 3; i++)
-        for (size_t j = 0; j < 3; j++)
-            r[i][j] *= s;
 
     for (size_t i = 0; i < p.size(); i++) {
         Vect3f d(0, 0, 0);
