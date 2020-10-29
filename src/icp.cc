@@ -5,6 +5,8 @@
 
 #include "log.hh"
 
+#define max_iter 1
+
 //s, R, t, err
 alignment_t find_alignment(Points scene, Points model)
 {
@@ -69,14 +71,48 @@ std::vector<size_t> find_correspondences(Points scene, Points model)
     return correspondences;
 }
 
-/* Points apply_alignment(Points scene, Points moddel, std::vector<size_t> correspondences)
+void apply_scale(Points scene, float scale, size_t index)
 {
-    size_t size_s = scene.size();
+    //scene[i] * scale
+    return;
+}
 
-    float scale =
+void apply_rotation(Points scene, Matrix rotation, size_t index)
+{
+    //scene[i] * la matrice
+    return;
+}
 
-    for (size_t i = 0; i < size_s; i++)
+void apply_translation(Points scene, Vect3f translation, size_t index)
+{
+    //scene[i] + translation
+    return;
+}
+
+//s; R; t
+Points apply_alignment(Points scene, Points model)
+{
+    for (size_t iter = 0; iter < max_iter; iter++)
     {
-        Vect3f s_point = scene[i];
+        std::vector<size_t> correspondences = find_correspondences(scene, model); // uniquement pour l'erreur
+        alignment_t alignment = find_alignment(scene, model);
+
+        float scale = std::get<float>(alignment[0]);
+        Matrix rotation = std::get<Matrix>(alignment[1]);
+        Vect3f translation = std::get<Vect3f>(alignment[2]);
+
+        size_t size_s = scene.size();
+
+        for (size_t i = 0; i < size_s; i++)
+        {
+            apply_scale(scene, scale, i);
+            apply_rotation(scene, rotation, i);
+            apply_translation(scene, translation, i);
+            //err
+        }
+        /* if err < thresh
+            break;
+        */
     }
-}*/
+    return scene;
+}
