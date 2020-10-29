@@ -24,11 +24,6 @@ int main(int argc, char *argv[])
     apply_alignment(scene, model);
 
     l << "find_aligment() OK" << std::endl;
-    /*for (auto v : dataset.getPoints()) {
-        std::cout << v;
-    }*/
 
-    //Points payet("data/data_students/perso.txt");
-    //find_aligment(payet, payet);
     return 0;
 }
