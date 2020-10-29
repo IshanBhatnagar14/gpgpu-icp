@@ -11,6 +11,9 @@ $(DIR):
 	mkdir $(DIR)
 	cd $(DIR); cmake ..; cd ..
 
+run: all
+	/$(DIR)/$(EXEC)
+
 check: clean all
 	./$(DIR)/$(EXEC)
 
