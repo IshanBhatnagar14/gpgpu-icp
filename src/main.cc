@@ -16,12 +16,12 @@ int main(int argc, char *argv[])
     Log l("GPGPU ICP");
     l.title();
 
-    Points scene("data/data_students/perso.txt");
+    Points p("data/data_students/perso.txt");
     Points model("data/data_students/perso_tr1.txt");
 
     l << "Parse OK" << std::endl;
 
-    apply_alignment(scene, model);
+    apply_alignment(p, model);
 
     l << "find_aligment() OK" << std::endl;
 
