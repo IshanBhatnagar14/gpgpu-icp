@@ -73,8 +73,9 @@ std::vector<size_t> find_correspondences(Points scene, Points model)
 
 void apply_scale(Points scene, float scale, size_t index)
 {
-    //scene[i] * scale
-    return;
+    scene[index].x *= scale;
+    scene[index].y *= scale;
+    scene[index].z *= scale;
 }
 
 void apply_rotation(Points scene, Matrix rotation, size_t index)
@@ -85,8 +86,14 @@ void apply_rotation(Points scene, Matrix rotation, size_t index)
 
 void apply_translation(Points scene, Vect3f translation, size_t index)
 {
-    //scene[i] + translation
-    return;
+    size_t s_size = scene.size();
+    
+    for (size_t i = 0; i < s_size; i++)
+    {
+        scene[i].x += translation.x;
+        scene[i].y += translation.y;
+        scene[i].z += translation.z;
+    }
 }
 
 //s; R; t
