@@ -1,1 +1,0 @@
-g++ -Wall -Wextra -pedantic -rdynamic CMakeFiles/gpgpu-icp.dir/src/main.cc.o CMakeFiles/gpgpu-icp.dir/src/log.cc.o CMakeFiles/gpgpu-icp.dir/src/points.cc.o CMakeFiles/gpgpu-icp.dir/src/matrix.cc.o CMakeFiles/gpgpu-icp.dir/src/alignment.cc.o CMakeFiles/gpgpu-icp.dir/src/icp.cc.o -o gpgpu-icp  -lm 
