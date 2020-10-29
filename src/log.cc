@@ -41,7 +41,7 @@ std::ostream &Log::operator<<(std::string message)
             s << "\033[1;31m";
         else
             s << "\033[1;32m";
-        s << tag_ << "\033[0m" << std::setw(12 - tag_.length()) << "] "
+        s << tag_ << "\033[0m" << std::setw(16 - tag_.length()) << "] "
           << message;
         return s;
     }
