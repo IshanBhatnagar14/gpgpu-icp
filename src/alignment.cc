@@ -73,30 +73,28 @@ Matrix get_rotation_matrix(Matrix q)
     return r3;
 }
 
-float getSum(Points Pprime, size_t P_idx, Points Yprime, size_t Y_idx,
-             std::vector<size_t> correspondences)
+float getSum(Points Pprime, size_t P_idx, Points Yprime, size_t Y_idx)
 {
     float sum = 0;
     for (size_t i = 0; i < Pprime.size(); i++)
-        sum += Pprime[i][P_idx] * Yprime[correspondences[i]][Y_idx];
+        sum += Pprime[i][P_idx] * Yprime[i][Y_idx];
 
     return sum;
 }
 
-Matrix get_quaternion_matrix(Points Pprime, Points Yprime,
-                             std::vector<size_t> correspondences)
+Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
 {
-    float s_xx = getSum(Pprime, 0, Yprime, 0, correspondences);
-    float s_xy = getSum(Pprime, 0, Yprime, 1, correspondences);
-    float s_xz = getSum(Pprime, 0, Yprime, 2, correspondences);
+    float s_xx = getSum(Pprime, 0, Yprime, 0);
+    float s_xy = getSum(Pprime, 0, Yprime, 1);
+    float s_xz = getSum(Pprime, 0, Yprime, 2);
 
-    float s_yx = getSum(Pprime, 1, Yprime, 0, correspondences);
-    float s_yy = getSum(Pprime, 1, Yprime, 1, correspondences);
-    float s_yz = getSum(Pprime, 1, Yprime, 2, correspondences);
+    float s_yx = getSum(Pprime, 1, Yprime, 0);
+    float s_yy = getSum(Pprime, 1, Yprime, 1);
+    float s_yz = getSum(Pprime, 1, Yprime, 2);
 
-    float s_zx = getSum(Pprime, 2, Yprime, 0, correspondences);
-    float s_zy = getSum(Pprime, 2, Yprime, 1, correspondences);
-    float s_zz = getSum(Pprime, 2, Yprime, 2, correspondences);
+    float s_zx = getSum(Pprime, 2, Yprime, 0);
+    float s_zy = getSum(Pprime, 2, Yprime, 1);
+    float s_zz = getSum(Pprime, 2, Yprime, 2);
 
     Matrix N(4);
     N[0][0] = s_xx + s_yy + s_zz;
@@ -120,7 +118,7 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime,
     N[3][3] = s_zz - s_yy - s_xx;
 
     Log l(__FUNCTION__);
-    l << "N: " << N;
+    l << "N: " << N << std::endl;
 
     double M[16] = { N[0][0], N[0][1], N[0][2], N[0][3], N[1][0], N[1][1],
                      N[1][2], N[1][3], N[2][0], N[2][1], N[2][2], N[2][3],
@@ -129,7 +127,7 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime,
     Eigen::EigenSolver<Eigen::Matrix4d> es(A_);
     Eigen::MatrixXcd V_eigen = es.eigenvectors();
 
-    l << "V_eigen: " << V_eigen;
+    l << "V_eigen: " << V_eigen << std::endl;
 
     Matrix R(2);
     R[0][0] = V_eigen.col(0)[0].real();

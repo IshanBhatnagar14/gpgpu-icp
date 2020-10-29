@@ -23,6 +23,7 @@ class Points
 
   public:
     Points(std::string path);
+    Points(const Points &p);
     Points();
     void addPoint(Vect3f v);
     size_t size() const;
