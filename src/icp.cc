@@ -42,7 +42,7 @@ alignment_t find_alignment(Points scene, Points model)
     Vect3f translation = get_transational_offset(mu_scene, mu_model, rotation);
     l << "Translation: " << translation << std::endl;
     float error = residual_error(scene, model, rotation, translation);
-    l << "Error: " << error << std::endl;
+    l << "Residual error: " << error << std::endl;
 
     alignment.push_back(scale);
     alignment.push_back(rotation);
@@ -146,15 +146,23 @@ Points apply_alignment(Points scene, Points model)
         apply_rotation(scene, rotation);
         apply_translation(scene, translation);
 
-        // TODO
-        // COMPUTE E
-        // ERR = ERR + E'*E
+        Vect3f e;
+
+        for (size_t i = 0; i < s_size; i++)
+        {
+            e.x = model[i].x - scene[i].x;
+            e.y = model[i].y - scene[i].y;
+            e.z = model[i].z - scene[i].z;
+            err += e.x * e.x + e.y * e.y + e.z * e.z;
+        }
+
+        l << "Error: " << err << std::endl;
 
         final_err = err / s_size;
 
-        /*if (final_err < THRESH) {
+        if (final_err < THRESH) {
             break;
-        }*/
+        }
     }
     l.title();
     l << "Final scale: " << final_scale << std::endl;
