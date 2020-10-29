@@ -28,10 +28,10 @@ alignment_t find_alignment(Points scene, Points model)
     float scale = get_scaling_factor(scene_prime, model_prime);
     l << "Scale: " << scale << std::endl;
     Matrix rotation = get_rotation_matrix(quaternion);
-    l << "Rotation ok" << std::endl;
+    l << "Rotation :" << rotation << std::endl;
     Vect3f translation =
         get_transational_offset(mu_scene, mu_model, scale, rotation);
-    l << "Transaltion: " << translation << std::endl;
+    l << "Translation: " << translation << std::endl;
     float error = 0;
     l << "Error: " << error << std::endl;
 
