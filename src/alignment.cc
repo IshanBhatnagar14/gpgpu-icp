@@ -36,10 +36,10 @@ Matrix get_rotation_matrix(Matrix q)
     float q2 = q[1][0];
     float q3 = q[1][1];
 
-    std::vector<float> Qb0 = { q0, -q1, -q2, -q3 };
-    std::vector<float> Qb1 = { q1, q0, q3, -q2 };
-    std::vector<float> Qb2 = { q2, -q3, q0, q1 };
-    std::vector<float> Qb3 = { q3, q2, -q1, q0 };
+    std::vector<float> Qb0 = { q0, q1, q2, q3 };
+    std::vector<float> Qb1 = { -q1, q0, -q3, q2 };
+    std::vector<float> Qb2 = { -q2, q3, q0, -q1 };
+    std::vector<float> Qb3 = { -q3, -q2, q1, q0 };
 
     std::vector<float> Q0 = { q0, -q1, -q2, -q3 };
     std::vector<float> Q1 = { q1, q0, -q3, q2 };
@@ -53,15 +53,14 @@ Matrix get_rotation_matrix(Matrix q)
     Matrix QB(QB_tmp);
     Matrix r(4, 4);
 
-    for (size_t i = 0; i < 4; i++) {
-        for (size_t j = 0; j < 4; j++) {
+    for (size_t i = 0; i < 4; i++) 
+        for (size_t j = 0; j < 4; j++) 
+        {
             r[i][j] = 0;
-            for (size_t k = 0; k < 4; k++) {
-                //k et i sont inverses pour transposer
-                r[i][j] += QB[k][i] * Q[k][j];
-            }
+            for (size_t k = 0; k < 4; k++) 
+                r[i][j] += QB[i][k] * Q[k][j];
         }
-    }
+
     Matrix r3(3, 3);
 
     for (size_t i = 0; i < 3; i++)
