@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     l.title();
 
     Points scene("data/data_students/perso.txt");
-    Points model("data/data_students/perso2.txt");
+    Points model("data/data_students/perso_tr1.txt");
 
     l << "Parse OK" << std::endl;
 
