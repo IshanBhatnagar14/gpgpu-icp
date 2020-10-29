@@ -9,7 +9,8 @@
 #define thresh 0.00001
 
 //s, R, t, err
-alignment_t find_alignment(Points scene, Points model)
+alignment_t find_alignment(Points scene, Points model,
+                           std::vector<size_t> correspondences)
 {
     Log l(__FUNCTION__);
     alignment_t alignment;
@@ -25,7 +26,8 @@ alignment_t find_alignment(Points scene, Points model)
     l << "model prime: " << model_prime << std::endl;
     l << "primes ok" << std::endl;
 
-    Matrix quaternion = get_quaternion_matrix(scene_prime, model_prime);
+    Matrix quaternion =
+        get_quaternion_matrix(scene_prime, model_prime, correspondences);
     l << "quaternion: " << quaternion << std::endl;
 
     float scale = get_scaling_factor(scene_prime, model_prime);
@@ -109,7 +111,7 @@ Points apply_alignment(Points scene, Points model)
     for (size_t iter = 0; iter < max_iter; iter++) {
         std::vector<size_t> correspondences =
             find_correspondences(scene, model); // uniquement pour l'erreur
-        alignment_t alignment = find_alignment(scene, model);
+        alignment_t alignment = find_alignment(scene, model, correspondences);
 
         float scale = std::get<float>(alignment[0]);
         Matrix rotation = std::get<Matrix>(alignment[1]);

@@ -73,28 +73,30 @@ Matrix get_rotation_matrix(Matrix q)
     return r3;
 }
 
-float getSum(Points Pprime, size_t P_idx, Points Yprime, size_t Y_idx)
+float getSum(Points Pprime, size_t P_idx, Points Yprime, size_t Y_idx,
+             std::vector<size_t> correspondences)
 {
     float sum = 0;
     for (size_t i = 0; i < Pprime.size(); i++)
-        sum += Pprime[i][P_idx] * Yprime[i][Y_idx];
+        sum += Pprime[i][P_idx] * Yprime[correspondences[i]][Y_idx];
 
     return sum;
 }
 
-Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
+Matrix get_quaternion_matrix(Points Pprime, Points Yprime,
+                             std::vector<size_t> correspondences)
 {
-    float s_xx = getSum(Pprime, 0, Yprime, 0);
-    float s_xy = getSum(Pprime, 0, Yprime, 1);
-    float s_xz = getSum(Pprime, 0, Yprime, 2);
+    float s_xx = getSum(Pprime, 0, Yprime, 0, correspondences);
+    float s_xy = getSum(Pprime, 0, Yprime, 1, correspondences);
+    float s_xz = getSum(Pprime, 0, Yprime, 2, correspondences);
 
-    float s_yx = getSum(Pprime, 1, Yprime, 0);
-    float s_yy = getSum(Pprime, 1, Yprime, 1);
-    float s_yz = getSum(Pprime, 1, Yprime, 2);
+    float s_yx = getSum(Pprime, 1, Yprime, 0, correspondences);
+    float s_yy = getSum(Pprime, 1, Yprime, 1, correspondences);
+    float s_yz = getSum(Pprime, 1, Yprime, 2, correspondences);
 
-    float s_zx = getSum(Pprime, 2, Yprime, 0);
-    float s_zy = getSum(Pprime, 2, Yprime, 1);
-    float s_zz = getSum(Pprime, 2, Yprime, 2);
+    float s_zx = getSum(Pprime, 2, Yprime, 0, correspondences);
+    float s_zy = getSum(Pprime, 2, Yprime, 1, correspondences);
+    float s_zz = getSum(Pprime, 2, Yprime, 2, correspondences);
 
     Matrix N(4);
     N[0][0] = s_xx + s_yy + s_zz;
