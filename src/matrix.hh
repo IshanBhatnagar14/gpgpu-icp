@@ -27,4 +27,4 @@ class Matrix
     friend std::ostream &operator<<(std::ostream &os, const Matrix &m);
 };
 
-Points &operator*(const Points &points, const &Matrix matrix);
+Points &operator*=(Points &points, const Matrix &matrix);

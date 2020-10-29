@@ -71,25 +71,23 @@ std::vector<size_t> find_correspondences(Points scene, Points model)
     return correspondences;
 }
 
-void apply_scale(Points scene, float scale, size_t index)
+void apply_scale(Points &scene, float scale, size_t index)
 {
     scene[index].x *= scale;
     scene[index].y *= scale;
     scene[index].z *= scale;
 }
 
-void apply_rotation(Points scene, Matrix rotation, size_t index)
+void apply_rotation(Points &scene, Matrix rotation, size_t index)
 {
-    //scene[i] * la matrice
-    return;
+    scene *= rotation;
 }
 
-void apply_translation(Points scene, Vect3f translation, size_t index)
+void apply_translation(Points &scene, Vect3f translation, size_t index)
 {
     size_t s_size = scene.size();
-    
-    for (size_t i = 0; i < s_size; i++)
-    {
+
+    for (size_t i = 0; i < s_size; i++) {
         scene[i].x += translation.x;
         scene[i].y += translation.y;
         scene[i].z += translation.z;
@@ -99,9 +97,9 @@ void apply_translation(Points scene, Vect3f translation, size_t index)
 //s; R; t
 Points apply_alignment(Points scene, Points model)
 {
-    for (size_t iter = 0; iter < max_iter; iter++)
-    {
-        std::vector<size_t> correspondences = find_correspondences(scene, model); // uniquement pour l'erreur
+    for (size_t iter = 0; iter < max_iter; iter++) {
+        std::vector<size_t> correspondences =
+            find_correspondences(scene, model); // uniquement pour l'erreur
         alignment_t alignment = find_alignment(scene, model);
 
         float scale = std::get<float>(alignment[0]);
@@ -110,8 +108,7 @@ Points apply_alignment(Points scene, Points model)
 
         size_t size_s = scene.size();
 
-        for (size_t i = 0; i < size_s; i++)
-        {
+        for (size_t i = 0; i < size_s; i++) {
             apply_scale(scene, scale, i);
             apply_rotation(scene, rotation, i);
             apply_translation(scene, translation, i);
