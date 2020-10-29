@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     l << "Parse OK" << std::endl;
 
-    apply_alignment(model, scene);
+    apply_alignment(scene, model);
 
     l << "find_aligment() OK" << std::endl;
 
