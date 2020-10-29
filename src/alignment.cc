@@ -127,7 +127,7 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
     Eigen::EigenSolver<Eigen::Matrix4d> es(A_);
     Eigen::MatrixXcd V_eigen = es.eigenvectors();
 
-    l << "V_eigen: " << V_eigen << std::endl;
+    l << "V_eigen: " << std::endl << V_eigen << std::endl;
 
     Matrix R(2);
     R[0][0] = V_eigen.col(0)[0].real();
