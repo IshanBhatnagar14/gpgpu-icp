@@ -34,15 +34,16 @@ alignment_t find_alignment(Points p, Points y, Points m)
     Matrix rotation = get_rotation_matrix(quaternion);
     l << "Rotation: " << rotation << std::endl;
 
+    Matrix scaled_rotation(3);
     for (size_t i = 0; i < 3; i++)
         for (size_t j = 0; j < 3; j++)
-            rotation[i][j] *= scale;
+            scaled_rotation[i][j] = rotation[i][j] * scale;
 
-    l << "Rotation * scale: " << rotation << std::endl;
+    l << "Rotation * scale: " << scaled_rotation << std::endl;
 
-    Vect3f translation = get_transational_offset(mu_p, mu_y, rotation);
+    Vect3f translation = get_transational_offset(mu_p, mu_y, scaled_rotation);
     l << "Translation: " << translation << std::endl;
-    float error = residual_error(p, y, rotation, translation);
+    float error = residual_error(p, y, scaled_rotation, translation);
     l << "Residual error: " << error << std::endl;
 
     alignment.push_back(scale);
