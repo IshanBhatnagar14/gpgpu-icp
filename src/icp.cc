@@ -48,6 +48,7 @@ alignment_t find_alignment(Points p, Points y, Points m)
 
     alignment.push_back(scale);
     alignment.push_back(rotation);
+    alignment.push_back(scaled_rotation);
     alignment.push_back(translation);
     alignment.push_back(error);
 
@@ -93,9 +94,9 @@ void apply_scale(Points &p, float scale)
     }
 }
 
-void apply_rotation(Points &p, Matrix rotation)
+void apply_scalled_rotation(Points &p, Matrix scalled_rotation)
 {
-    p = rotation * p;
+    p = scalled_rotation * p;
 }
 
 void apply_translation(Points &p, Vect3f translation)
@@ -135,16 +136,16 @@ Points apply_alignment(Points p, Points model)
 
         float scale = std::get<float>(alignment[0]);
         Matrix rotation = std::get<Matrix>(alignment[1]);
-        Vect3f translation = std::get<Vect3f>(alignment[2]);
-        float err = std::get<float>(alignment[3]);
+        Matrix scalled_rotation = std::get<Matrix>(alignment[2]);
+        Vect3f translation = std::get<Vect3f>(alignment[3]);
+        float err = std::get<float>(alignment[4]);
 
         final_scale *= scale;
         final_translation.x += translation.x;
         final_translation.y += translation.y;
         final_translation.z += translation.z;
 
-        apply_scale(p, scale);
-        apply_rotation(p, rotation);
+        apply_scalled_rotation(p, scalled_rotation);
         apply_translation(p, translation);
 
         Vect3f e;

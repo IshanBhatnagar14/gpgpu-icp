@@ -36,9 +36,9 @@ size_t Matrix::getHeight() const
 Points &operator*(const Matrix &matrix, Points &points)
 {
     for (size_t i = 0; i < points.size(); i++) {
-        size_t x = points[i].x;
-        size_t y = points[i].y;
-        size_t z = points[i].z;
+        float x = points[i].x;
+        float y = points[i].y;
+        float z = points[i].z;
         points[i].x = x * matrix[0][0] + y * matrix[0][1] + z * matrix[0][2];
         points[i].y = x * matrix[1][0] + y * matrix[1][1] + z * matrix[1][2];
         points[i].z = x * matrix[2][0] + y * matrix[2][1] + z * matrix[2][2];
