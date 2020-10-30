@@ -6,7 +6,7 @@
 
 #include "log.hh"
 
-#define MAX_ITER 2
+#define MAX_ITER 8
 #define THRESH 0.00001
 
 //s, R, t, err
