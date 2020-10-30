@@ -17,3 +17,4 @@ Matrix get_rotation_matrix(Matrix q);
 float get_scaling_factor(Points Pprime, Points Yprime);
 Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, Matrix R);
 float residual_error(Points p, Points y, Matrix r, Vect3f t);
+void dump_on_file(Points points, std::string path);

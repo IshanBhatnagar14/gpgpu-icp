@@ -2,6 +2,7 @@
 
 #include <limits.h>
 #include <math.h>
+#include <fstream>
 
 #include "log.hh"
 
@@ -51,6 +52,8 @@ alignment_t find_alignment(Points p, Points y, Points m)
 
     return alignment;
 }
+
+
 
 std::vector<size_t> find_correspondences(Points p, Points model)
 {
@@ -166,5 +169,26 @@ Points apply_alignment(Points p, Points model)
     l << "Final rotation: TODO" << std::endl;
     l << "Final translation: " << final_translation << std::endl;
     l << "Final error: " << final_err << std::endl;
+
+    dump_on_file(p, "result.txt");
+
+
+
     return p;
+}
+
+void dump_on_file(Points p, std::string path)
+{
+
+    Log l(__FUNCTION__);
+    l << "Dump result on " << path << " | p_size:" << p.size() << std::endl;
+
+    std::ofstream stream;
+    stream.open (path);
+    stream << "Points_0,Points_1,Points_2\n";
+
+    for (size_t i = 0; i < p.size(); i++)
+        stream << p[i].x << "," << p[i].y << "," << p[i].z << "\n";
+
+    stream.close();
 }

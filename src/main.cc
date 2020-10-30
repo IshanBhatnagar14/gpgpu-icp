@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
     Log l("GPGPU ICP");
     l.title();
 
-    Points p("data/data_students/perso.txt");
-    Points model("data/data_students/perso_tr1.txt");
+    Points p("data/data_students/cow_ref.txt");
+    Points model("data/data_students/cow_tr1.txt");
 
     l << "Parse OK" << std::endl;
 
