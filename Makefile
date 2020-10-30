@@ -18,4 +18,5 @@ check: clean all
 	./$(DIR)/$(EXEC)
 
 clean:
-	rm -rf $(DIR)
+	$(RM) $(DIR)
+	$(RM) result*.txt

@@ -1,8 +1,8 @@
 #include "icp.hh"
 
+#include <fstream>
 #include <limits.h>
 #include <math.h>
-#include <fstream>
 
 #include "log.hh"
 
@@ -52,8 +52,6 @@ alignment_t find_alignment(Points p, Points y, Points m)
 
     return alignment;
 }
-
-
 
 std::vector<size_t> find_correspondences(Points p, Points model)
 {
@@ -163,6 +161,7 @@ Points apply_alignment(Points p, Points model)
         if (final_err < THRESH) {
             break;
         }
+        dump_on_file(p, "result" + std::to_string(iter) + ".txt");
     }
     l.title();
     l << "Final scale: " << final_scale << std::endl;
@@ -172,19 +171,16 @@ Points apply_alignment(Points p, Points model)
 
     dump_on_file(p, "result.txt");
 
-
-
     return p;
 }
 
 void dump_on_file(Points p, std::string path)
 {
-
     Log l(__FUNCTION__);
     l << "Dump result on " << path << " | p_size:" << p.size() << std::endl;
 
     std::ofstream stream;
-    stream.open (path);
+    stream.open(path);
     stream << "Points_0,Points_1,Points_2\n";
 
     for (size_t i = 0; i < p.size(); i++)
