@@ -6,7 +6,7 @@
 
 #include "log.hh"
 
-#define MAX_ITER 8
+#define MAX_ITER 11
 #define THRESH 0.00001
 
 //s, R, t, err
@@ -21,9 +21,9 @@ alignment_t find_alignment(Points p, Points y, Points m)
     l << "mu y: " << mu_y << std::endl;
 
     Points p_prime = create_prime(p, mu_p);
-    l << "p prime: " << p_prime << std::endl;
-    Points y_prime = create_prime(y, mu_y);
-    l << "y prime: " << y_prime << std::endl;
+    //l << "p prime: " << p_prime << std::endl;
+    Points y_prime = create_prime(m, mu_y);
+    //l << "y prime: " << y_prime << std::endl;
     l << "primes ok" << std::endl;
 
     Matrix quaternion = get_quaternion_matrix(p_prime, y_prime);
