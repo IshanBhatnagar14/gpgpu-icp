@@ -21,6 +21,14 @@ int main(int argc, char *argv[])
 
     l << "Parse OK" << std::endl;
 
+    if (p.size() != model.size())
+    {
+        Log l("Parsing", true);
+        l << "Points sets need to have the same number of points" << std::endl;
+
+    }
+
+    
     apply_alignment(p, model);
 
     l << "find_aligment() OK" << std::endl;

@@ -1,7 +1,6 @@
 #include "icp.hh"
 
 #include <fstream>
-#include <limits.h>
 #include <math.h>
 
 #include "log.hh"
@@ -57,31 +56,30 @@ alignment_t find_alignment(Points p, Points y)
 
 Points get_correspondences(const Points p, const Points m)
 {
+    Points Y;
     size_t size = p.size();
 
-    Points Y;
-
-    for (size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) 
+    {
         Vect3f pi = p[i];
+        float minD = std::numeric_limits<float>::max();
+        size_t idx = 0;;
 
-        std::vector<float> d;
-        for (size_t k = 0; k < size; k++) {
+        for (size_t k = 0; k < size; k++) 
+        {
             Vect3f mk = m[k];
 
-            d.push_back(sqrt(pow(pi.x - mk.x, 2) + pow(pi.y - mk.y, 2) +
+            float dist = (sqrt(pow(pi.x - mk.x, 2) + pow(pi.y - mk.y, 2) +
                              pow(pi.z - mk.z, 2)));
-        }
-
-        float minD;
-        size_t j = 0;
-
-        for (size_t l = 0; l < d.size(); l++) {
-            if (d[l] < d[j]) {
-                minD = d[l];
-                j = l;
+            
+            if (dist < minD)
+            {
+                minD = dist;
+                idx = k;
             }
         }
-        Y.addPoint(m[j]);
+
+        Y.addPoint(m[idx]);
     }
     return Y;
 }
