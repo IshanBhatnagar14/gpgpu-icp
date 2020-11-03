@@ -83,33 +83,6 @@ std::vector<size_t> find_correspondences(Points p, Points model)
     return correspondences;
 }
 
-void apply_scale(Points &p, float scale)
-{
-    size_t s_size = p.size();
-
-    for (size_t i = 0; i < s_size; i++) {
-        p[i].x *= scale;
-        p[i].y *= scale;
-        p[i].z *= scale;
-    }
-}
-
-void apply_scalled_rotation(Points &p, Matrix scalled_rotation)
-{
-    p = scalled_rotation * p;
-}
-
-void apply_translation(Points &p, Vect3f translation)
-{
-    size_t s_size = p.size();
-
-    for (size_t i = 0; i < s_size; i++) {
-        p[i].x += translation.x;
-        p[i].y += translation.y;
-        p[i].z += translation.z;
-    }
-}
-
 //s; R; t
 Points apply_alignment(Points p, Points model)
 {
@@ -125,13 +98,14 @@ Points apply_alignment(Points p, Points model)
     for (size_t iter = 0; iter < MAX_ITER; iter++) {
         l.title();
 
+        // Compute Y and newP
         std::vector<size_t> correspondences = find_correspondences(p, model);
-
         Points y;
         for (size_t i = 0; i < model.size(); i++) {
             y.addPoint(model[correspondences[i]]);
         }
 
+        // Find Alignment
         alignment_t alignment = find_alignment(p, y, model);
 
         float scale = std::get<float>(alignment[0]);
@@ -140,30 +114,34 @@ Points apply_alignment(Points p, Points model)
         Vect3f translation = std::get<Vect3f>(alignment[3]);
         float err = std::get<float>(alignment[4]);
 
+        // Saving final results
         final_scale *= scale;
-        final_translation.x += translation.x;
-        final_translation.y += translation.y;
-        final_translation.z += translation.z;
+        final_translation = final_translation + translation;
 
-        apply_scalled_rotation(p, scalled_rotation);
-        apply_translation(p, translation);
+        // Applying (newP)
+        Points newP = (scalled_rotation * p) + translation;
 
+        // Error
         Vect3f e;
 
         for (size_t i = 0; i < s_size; i++) {
-            e.x = y[i].x - p[i].x;
-            e.y = y[i].y - p[i].y;
-            e.z = y[i].z - p[i].z;
+            e = y[i] - newP[i];
             err += e.x * e.x + e.y * e.y + e.z * e.z;
         }
+        err /= s_size;
+        l << "Error: " << err << std::endl;
 
-        final_err = err / s_size;
-        l << "Error: " << final_err << std::endl;
+        // Saving error
+        final_err = err;
 
         if (final_err < THRESH) {
             break;
         }
-        dump_on_file(p, "result" + std::to_string(iter) + ".txt");
+
+        dump_on_file(newP, "result" + std::to_string(iter) + ".txt");
+
+        // Applying to p
+        p = newP;
     }
     l.title();
     l << "Final scale: " << final_scale << std::endl;

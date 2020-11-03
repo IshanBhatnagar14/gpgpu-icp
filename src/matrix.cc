@@ -33,19 +33,6 @@ size_t Matrix::getHeight() const
     return height_;
 }
 
-Points &operator*(const Matrix &matrix, Points &points)
-{
-    for (size_t i = 0; i < points.size(); i++) {
-        float x = points[i].x;
-        float y = points[i].y;
-        float z = points[i].z;
-        points[i].x = x * matrix[0][0] + y * matrix[0][1] + z * matrix[0][2];
-        points[i].y = x * matrix[1][0] + y * matrix[1][1] + z * matrix[1][2];
-        points[i].z = x * matrix[2][0] + y * matrix[2][1] + z * matrix[2][2];
-    }
-    return points;
-}
-
 std::vector<float> &Matrix::operator[](size_t i)
 {
     return this->matrix_[i];

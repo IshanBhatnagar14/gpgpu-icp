@@ -12,9 +12,7 @@ Vect3f get_mean(Points points)
     Vect3f m(0, 0, 0);
     size_t s = points.size();
     for (size_t i = 0; i < s; i++) {
-        m.x += points[i].x;
-        m.y += points[i].y;
-        m.z += points[i].z;
+        m = m + points[i];
     }
     m.x /= s;
     m.y /= s;
@@ -161,22 +159,17 @@ Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, Matrix R)
     return t;
 }
 
-float residual_error(Points p, Points y, Matrix r, Vect3f t)
+float residual_error(const Points p, const Points y, Matrix sr, Vect3f t)
 {
     float err = 0;
 
-    for (size_t i = 0; i < p.size(); i++) {
-        Vect3f d(0, 0, 0);
-        Vect3f tmp(0, 0, 0);
-        for (size_t j = 0; j < 3; j++) {
-            d[j] = y[i][j];
-            for (size_t k = 0; k < 3; k++)
-                tmp[j] += r[j][k] * p[i][k];
+    Points newP = (sr * p) + t;
 
-            d[j] -= (tmp[j] + t[j]);
-        }
-        for (size_t j = 0; j < 3; j++)
-            err += d[j] * d[j];
+    for (size_t i = 0; i < p.size(); i++) {
+        Vect3f d;
+        d = y[i] - newP[i];
+        err += d.x * d.x + d.y * d.y + d.z * d.z;
     }
+
     return err;
 }

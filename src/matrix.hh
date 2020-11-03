@@ -3,8 +3,6 @@
 #include <ostream>
 #include <vector>
 
-#include "points.hh"
-
 typedef std::vector<std::vector<float>> matrix_t;
 
 class Matrix
@@ -26,5 +24,3 @@ class Matrix
     std::vector<float> &operator[](size_t i);
     friend std::ostream &operator<<(std::ostream &os, const Matrix &m);
 };
-
-Points &operator*(const Matrix &matrix, Points &points);
