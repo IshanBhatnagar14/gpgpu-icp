@@ -116,14 +116,14 @@ Points apply_alignment(Points p, const Points model)
         // Compute Y
         Points y = get_correspondences(p, model);
 
-        std::cout << "Time Elapsed:" << stop_timer(clk);
+        std::cout << "Time Elapsed:" << stop_timer(clk) <<"\n";
 
         clk = start_timer();
 
         // Find Alignment
         alignment_t alignment = find_alignment(p, y);
 
-        std::cout << "Time Elapsed:" << stop_timer(clk);
+        std::cout << "Time Elapsed:" << stop_timer(clk) <<"\n";
 
 
         float scale = std::get<float>(alignment[0]);
