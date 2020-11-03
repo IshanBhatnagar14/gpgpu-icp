@@ -118,8 +118,13 @@ Points apply_alignment(Points p, const Points model)
 
         std::cout << "Time Elapsed:" << stop_timer(clk);
 
+        clk = start_timer();
+
         // Find Alignment
         alignment_t alignment = find_alignment(p, y);
+
+        std::cout << "Time Elapsed:" << stop_timer(clk);
+
 
         float scale = std::get<float>(alignment[0]);
         Matrix rotation = std::get<Matrix>(alignment[1]);
