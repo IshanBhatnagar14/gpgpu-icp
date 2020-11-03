@@ -2,15 +2,29 @@
 
 #include <fstream>
 #include <math.h>
+#include <iostream>
+#include <cstdio>
+#include <ctime>
 
 #include "log.hh"
 
 #define MAX_ITER 16
 #define THRESH 0.00001
 
+
+std::clock_t start_timer() {
+    std::clock_t start;
+    start = std::clock();
+}
+
+double stop_timer(std::clock_t start) {
+    return (std::clock() - start) / (double) CLOCKS_PER_SEC;
+}
+
 //s, R, t, err
 alignment_t find_alignment(Points p, Points y)
 {
+
     Log l("Find Alignment");
     alignment_t alignment;
 
@@ -56,6 +70,8 @@ alignment_t find_alignment(Points p, Points y)
 
 Points get_correspondences(const Points p, const Points m)
 {
+
+
     Points Y;
     size_t size = p.size();
 
@@ -96,8 +112,11 @@ Points apply_alignment(Points p, const Points model)
     for (size_t iter = 0; iter < MAX_ITER; iter++) {
         l.title(iter + 1);
 
+        auto clk = start_timer();
         // Compute Y
         Points y = get_correspondences(p, model);
+
+        std::cout << "Time Elapsed:" << stop_timer(clk);
 
         // Find Alignment
         alignment_t alignment = find_alignment(p, y);
