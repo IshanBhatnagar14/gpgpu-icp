@@ -5,13 +5,13 @@
 
 #include "log.hh"
 
-#define MAX_ITER 11
+#define MAX_ITER 16
 #define THRESH 0.00001
 
 //s, R, t, err
 alignment_t find_alignment(Points p, Points y)
 {
-    Log l(__FUNCTION__);
+    Log l("Find Alignment");
     alignment_t alignment;
 
     Vect3f mu_p = get_mean(p);
@@ -59,21 +59,18 @@ Points get_correspondences(const Points p, const Points m)
     Points Y;
     size_t size = p.size();
 
-    for (size_t i = 0; i < size; i++) 
-    {
+    for (size_t i = 0; i < size; i++) {
         Vect3f pi = p[i];
         float minD = std::numeric_limits<float>::max();
-        size_t idx = 0;;
+        size_t idx = 0;
 
-        for (size_t k = 0; k < size; k++) 
-        {
+        for (size_t k = 0; k < size; k++) {
             Vect3f mk = m[k];
 
             float dist = (sqrt(pow(pi.x - mk.x, 2) + pow(pi.y - mk.y, 2) +
-                             pow(pi.z - mk.z, 2)));
-            
-            if (dist < minD)
-            {
+                               pow(pi.z - mk.z, 2)));
+
+            if (dist < minD) {
                 minD = dist;
                 idx = k;
             }
@@ -97,7 +94,7 @@ Points apply_alignment(Points p, const Points model)
     float final_err = 0;
 
     for (size_t iter = 0; iter < MAX_ITER; iter++) {
-        l.title();
+        l.title(iter + 1);
 
         // Compute Y
         Points y = get_correspondences(p, model);
@@ -153,7 +150,7 @@ Points apply_alignment(Points p, const Points model)
 
 void dump_on_file(Points p, std::string path)
 {
-    Log l(__FUNCTION__);
+    Log l("Dump on File");
     l << "Dump result on " << path << " | p_size:" << p.size() << std::endl;
 
     std::ofstream stream;

@@ -33,6 +33,14 @@ void Log::title()
     }
 }
 
+void Log::title(size_t step)
+{
+    if (Log::display) {
+        std::clog << "\033[0;33m====================== " << tag_ << " " << step
+                  << " ======================\033[0m" << std::endl;
+    }
+}
+
 std::ostream &Log::operator<<(std::string message)
 {
     if (Log::display) {

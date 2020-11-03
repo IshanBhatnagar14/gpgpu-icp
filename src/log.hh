@@ -16,6 +16,7 @@ class Log
     Log(std::string tag, bool error);
 
     void title();
+    void title(size_t step);
 
     std::ostream &operator<<(std::string message);
 
