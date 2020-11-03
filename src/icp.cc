@@ -10,19 +10,19 @@
 #define THRESH 0.00001
 
 //s, R, t, err
-alignment_t find_alignment(Points p, Points y, Points m)
+alignment_t find_alignment(Points p, Points y)
 {
     Log l(__FUNCTION__);
     alignment_t alignment;
 
     Vect3f mu_p = get_mean(p);
     l << "mu p: " << mu_p << std::endl;
-    Vect3f mu_y = get_mean(m);
+    Vect3f mu_y = get_mean(y);
     l << "mu y: " << mu_y << std::endl;
 
     Points p_prime = create_prime(p, mu_p);
     //l << "p prime: " << p_prime << std::endl;
-    Points y_prime = create_prime(m, mu_y);
+    Points y_prime = create_prime(y, mu_y);
     //l << "y prime: " << y_prime << std::endl;
     l << "primes ok" << std::endl;
 
@@ -55,38 +55,41 @@ alignment_t find_alignment(Points p, Points y, Points m)
     return alignment;
 }
 
-std::vector<size_t> find_correspondences(Points p, Points model)
+Points get_correspondences(const Points p, const Points m)
 {
-    size_t size_s = p.size();
-    size_t size_m = model.size();
+    size_t size = p.size();
 
-    std::vector<size_t> correspondences;
+    Points Y;
 
-    for (size_t i = 0; i < size_s; i++) {
-        Vect3f s_point = p[i];
-        float min_dist = LONG_MAX;
-        size_t chosen_idx = -1;
+    for (size_t i = 0; i < size; i++) {
+        Vect3f pi = p[i];
 
-        for (size_t j = 0; j < size_m; j++) {
-            Vect3f m_point = model[j];
-            float dist = sqrt(pow(m_point.x - s_point.x, 2) +
-                              pow(m_point.y - s_point.y, 2) +
-                              pow(m_point.z - s_point.y, 2));
+        std::vector<float> d;
+        for (size_t k = 0; k < size; k++) {
+            Vect3f mk = m[k];
 
-            if (dist < min_dist) {
-                min_dist = dist;
-                chosen_idx = j;
+            d.push_back(sqrt(pow(pi.x - mk.x, 2) + pow(pi.y - mk.y, 2) +
+                             pow(pi.z - mk.z, 2)));
+        }
+
+        float minD;
+        size_t j = 0;
+
+        for (size_t l = 0; l < d.size(); l++) {
+            if (d[l] < d[j]) {
+                minD = d[l];
+                j = l;
             }
         }
-        correspondences.push_back(chosen_idx);
+        Y.addPoint(m[j]);
     }
-    return correspondences;
+    return Y;
 }
 
 //s; R; t
-Points apply_alignment(Points p, Points model)
+Points apply_alignment(Points p, const Points model)
 {
-    size_t s_size = p.size();
+    size_t size = p.size();
 
     Log l("Alignment");
 
@@ -98,15 +101,11 @@ Points apply_alignment(Points p, Points model)
     for (size_t iter = 0; iter < MAX_ITER; iter++) {
         l.title();
 
-        // Compute Y and newP
-        std::vector<size_t> correspondences = find_correspondences(p, model);
-        Points y;
-        for (size_t i = 0; i < model.size(); i++) {
-            y.addPoint(model[correspondences[i]]);
-        }
+        // Compute Y
+        Points y = get_correspondences(p, model);
 
         // Find Alignment
-        alignment_t alignment = find_alignment(p, y, model);
+        alignment_t alignment = find_alignment(p, y);
 
         float scale = std::get<float>(alignment[0]);
         Matrix rotation = std::get<Matrix>(alignment[1]);
@@ -124,11 +123,11 @@ Points apply_alignment(Points p, Points model)
         // Error
         Vect3f e;
 
-        for (size_t i = 0; i < s_size; i++) {
+        for (size_t i = 0; i < size; i++) {
             e = y[i] - newP[i];
             err += e.x * e.x + e.y * e.y + e.z * e.z;
         }
-        err /= s_size;
+        err /= size;
         l << "Error: " << err << std::endl;
 
         // Saving error

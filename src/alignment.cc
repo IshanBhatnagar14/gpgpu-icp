@@ -82,6 +82,8 @@ float getSum(Points Pprime, size_t P_idx, Points Yprime, size_t Y_idx)
 
 Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
 {
+    Log l("Quaternion");
+
     float s_xx = getSum(Pprime, 0, Yprime, 0);
     float s_xy = getSum(Pprime, 0, Yprime, 1);
     float s_xz = getSum(Pprime, 0, Yprime, 2);
@@ -115,7 +117,6 @@ Matrix get_quaternion_matrix(Points Pprime, Points Yprime)
     N[3][2] = s_zy + s_yz;
     N[3][3] = s_zz - s_yy - s_xx;
 
-    Log l(__FUNCTION__);
     l << "N: " << N << std::endl;
 
     double M[16] = { N[0][0], N[0][1], N[0][2], N[0][3], N[1][0], N[1][1],
