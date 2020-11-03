@@ -13,8 +13,7 @@
 
 
 std::clock_t start_timer() {
-    std::clock_t start;
-    start = std::clock();
+    return std::clock();
 }
 
 double stop_timer(std::clock_t start) {
