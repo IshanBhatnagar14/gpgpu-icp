@@ -102,6 +102,7 @@ Points apply_alignment(Points p, const Points model)
     size_t size = p.size();
 
     Log l("Alignment");
+    Log lt("Timer");
 
     float final_scale = 1;
     Matrix final_rotation(3);
@@ -115,14 +116,14 @@ Points apply_alignment(Points p, const Points model)
         // Compute Y
         Points y = get_correspondences(p, model);
 
-        std::cout << "Time Elapsed:" << stop_timer(clk) <<"\n";
+        lt << "Time Elapsed after get_correspondences(): " << stop_timer(clk) << "s\n";
 
         clk = start_timer();
 
         // Find Alignment
         alignment_t alignment = find_alignment(p, y);
 
-        std::cout << "Time Elapsed:" << stop_timer(clk) <<"\n";
+        lt << "Time Elapsed after find_aligment(): " << stop_timer(clk) << "s\n";
 
 
         float scale = std::get<float>(alignment[0]);
