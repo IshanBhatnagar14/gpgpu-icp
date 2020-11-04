@@ -16,12 +16,12 @@ clean:
 # BENCHMARKS
 
 cow1: cpu-all all
-	time ./cpu_src/build/cpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt
-	time ./gpu_src/build/gpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt
+	bash -c "time ./cpu_src/build/cpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt"
+	bash -c "time ./gpu_src/build/gpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt"
 
 cow2: cpu-all all
-	time ./cpu_src/build/cpu-icp data/data_students/cow_tr2.txt data/data_students/cow_ref.txt
-	time ./gpu_src/build/gpu-icp data/data_students/cow_tr2.txt data/data_students/cow_ref.txt
+	bash -c "time ./cpu_src/build/cpu-icp data/data_students/cow_tr2.txt data/data_students/cow_ref.txt"
+	bash -c "time ./gpu_src/build/gpu-icp data/data_students/cow_tr2.txt data/data_students/cow_ref.txt"
 
 horse1: all
 	./gpu_src/build/gpu-icp data/data_students/horse_tr1.txt data/data_students/horse_ref.txt
