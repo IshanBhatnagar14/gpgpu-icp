@@ -11,7 +11,7 @@
 #include "log.hh"
 
 #define MAX_FLOAT 3.40282e+038
-#define MAX_ITER 1
+#define MAX_ITER 15
 #define THRESH 0.00001
 
 std::clock_t start_timer()
@@ -75,17 +75,17 @@ __global__ void search_corres(const float *p, const float *m, float *y, size_t s
     int i = (blockDim.x * blockIdx.x + threadIdx.x) * 3;
     if (i >= s)
         return;
-    printf("i: %d\n", i);
+    //printf("i: %d\n", i);
     float pi[3] = {p[i], p[i + 1], p[i + 2]};
 
     float minD = MAX_FLOAT;
     size_t idx = 0;
     
-    printf("pi: %f\n", pi[0]);
+    //printf("pi: %f\n", pi[0]);
 
-    for (size_t k = 0; k < s; k++) {
-        float mk[3] = {m[i], m[i + 1], m[i + 2]};
-        printf("mi: %f\n", mk[0]);
+    for (size_t k = 0; k < s; k += 3) {
+        float mk[3] = {m[k], m[k + 1], m[k + 2]};
+        //printf("mi: %f\n", mk[0]);
 
         float dist = (sqrt(pow(pi[0] - mk[0], 2) + pow(pi[i + 1] - mk[i + 1], 2) +
                     pow(pi[i + 2] - mk[i + 2], 2)));
@@ -98,6 +98,7 @@ __global__ void search_corres(const float *p, const float *m, float *y, size_t s
     y[i] = m[idx];
     y[i + 1] = m[idx + 1];
     y[i + 2] = m[idx + 2];
+    printf("y: %f %f %f\n", y[i], y[i+1], y[i+2]);
 }
 
 
@@ -121,14 +122,16 @@ Points get_correspondences(const Points p, const Points m)
     cudaMemcpy(cp, arr_p, size_malloc, cudaMemcpyHostToDevice); 
     cudaMemcpy(cm, arr_m, size_malloc, cudaMemcpyHostToDevice); 
      
-    search_corres<<<1, 4>>>(cp, cm, cy, p.size() * 3);
+    search_corres<<<3, 1024>>>(cp, cm, cy, p.size() * 3);
     cudaDeviceSynchronize();
 
     cudaMemcpy(arr_y, cy, size_malloc, cudaMemcpyDeviceToHost); 
     
+    
+    std::cout << arr_y[1]<< "\n";
     Points y(arr_y, p.size());
     
-    std::cout << y.size() << "\n";
+    std::cout << y[0].x << "\n";
     
     free(arr_p);
     free(arr_m);
