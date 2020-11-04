@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
+#include <cuda.h>
 
 #include "log.hh"
 
@@ -67,10 +68,14 @@ alignment_t find_alignment(Points p, Points y)
     return alignment;
 }
 
+__global__ void search_corres(const Points p, const Points m, size_t &res)
+{
+     
+}
+
+
 Points get_correspondences(const Points p, const Points m)
 {
-
-
     Points Y;
     size_t size = p.size();
 

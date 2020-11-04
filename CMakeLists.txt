@@ -6,7 +6,7 @@ set(TARGET_NAME gpgpu-icp)
 project(${TARGET_NAME})
 
 # compilations
-set(CMAKE_CXX_COMPILER "g++")
+set(CMAKE_CXX_COMPILER "nvcc")
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_STANDARD 17)
