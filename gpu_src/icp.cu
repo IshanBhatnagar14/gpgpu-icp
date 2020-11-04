@@ -2,13 +2,10 @@
 
 #include <cstdio>
 #include <ctime>
-<<<<<<< HEAD
 #include <cuda.h>
-=======
 #include <fstream>
 #include <iostream>
 #include <math.h>
->>>>>>> d53a10f31dc2e1f0f49ee946a0202d376743e4e7
 
 #include "log.hh"
 
