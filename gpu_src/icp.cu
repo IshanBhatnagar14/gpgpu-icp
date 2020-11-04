@@ -72,7 +72,7 @@ alignment_t find_alignment(Points p, Points y)
 
 __global__ void search_corres(const float *p, const float *m, float *y, size_t s)
 {
-    int i = blockDim.x * blockIdx.x  + threadIdx.x * 3;
+    int i = (blockDim.x * blockIdx.x + threadIdx.x) * 3;
     if (i >= s)
         return;
     printf("i: %d\n", i);
