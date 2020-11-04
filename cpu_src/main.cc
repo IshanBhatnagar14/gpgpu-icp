@@ -16,11 +16,19 @@ int main(int argc, char *argv[])
     Log l("GPGPU ICP");
     l.title();
 
-   // Points p("data/data_students/cow_ref.txt");
-   // Points model("data/data_students/cow_tr2.txt");
-    
-    Points p(argv[1]);
-    Points model(argv[2]);
+    Points p;
+    Points model;
+
+    if (argc < 2)
+    {
+        p = Points("data/data_students/cow_ref.txt");
+        model = Points("data/data_students/cow_tr2.txt");
+    }
+    else
+    {
+        p = Points(argv[1]);
+        model = Points(argv[2]);
+    }
 
     l << "Parse OK" << std::endl;
 
