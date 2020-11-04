@@ -3,7 +3,6 @@
 #include "../Eigen/SVD"
 #include <cmath>
 #include <iostream>
-
 #include "icp.hh"
 #include "log.hh"
 
