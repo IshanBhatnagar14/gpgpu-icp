@@ -16,12 +16,12 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src
 )
 add_executable(${TARGET_NAME}
-    src/main.cc
-    src/log.cc
-    src/points.cc
-    src/matrix.cc
-    src/alignment.cc
-    src/icp.cc
+    cpu_src/main.cc
+    cpu_src/log.cc
+    cpu_src/points.cc
+    cpu_src/matrix.cc
+    cpu_src/alignment.cc
+    cpu_src/icp.cc
 )
 
 # libs
