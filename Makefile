@@ -15,11 +15,11 @@ clean:
 
 # BENCHMARKS
 
-cow1: all cpu-all
+cow1: cpu-all all
 	time ./cpu_src/build/cpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt
 	time ./gpu_src/build/gpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt
 
-cow2: all cpu-all
+cow2: cpu-all all
 	time ./cpu_src/build/cpu-icp data/data_students/cow_tr2.txt data/data_students/cow_ref.txt
 	time ./gpu_src/build/gpu-icp data/data_students/cow_tr2.txt data/data_students/cow_ref.txt
 
