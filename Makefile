@@ -17,11 +17,11 @@ clean:
 
 cow1: cpu-all all
 	bash -c "time ./cpu_src/build/cpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt"
-	bash -c "time ./gpu_src/build/gpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt"
+	bash -c "(time ./gpu_src/build/gpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt) 1>/dev/null"
 
 cow2: cpu-all all
 	bash -c "time ./cpu_src/build/cpu-icp data/data_students/cow_tr2.txt data/data_students/cow_ref.txt"
-	bash -c "time ./gpu_src/build/gpu-icp data/data_students/cow_tr2.txt data/data_students/cow_ref.txt"
+	bash -c "(time ./gpu_src/build/gpu-icp data/data_students/cow_tr2.txt data/data_students/cow_ref.txt) 1>/dev/null"
 
 horse1: all
 	./gpu_src/build/gpu-icp data/data_students/horse_tr1.txt data/data_students/horse_ref.txt

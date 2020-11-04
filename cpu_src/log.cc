@@ -28,7 +28,7 @@ Log::Log(std::string tag, bool error)
 void Log::title()
 {
     if (Log::display) {
-        std::clog << "\033[0;33m====================== " << tag_
+        std::cout << "\033[0;33m====================== " << tag_
                   << " ======================\033[0m" << std::endl;
     }
 }
@@ -36,7 +36,7 @@ void Log::title()
 void Log::title(size_t step)
 {
     if (Log::display) {
-        std::clog << "\033[0;33m====================== " << tag_ << " " << step
+        std::cout << "\033[0;33m====================== " << tag_ << " " << step
                   << " ======================\033[0m" << std::endl;
     }
 }
@@ -44,7 +44,7 @@ void Log::title(size_t step)
 std::ostream &Log::operator<<(std::string message)
 {
     if (Log::display) {
-        std::ostream &s = std::clog << "[";
+        std::ostream &s = std::cout << "[";
         if (error_)
             s << "\033[1;31m";
         else
