@@ -15,8 +15,14 @@ clean:
 
 # BENCHMARKS
 
+.PHONY: cow1 cow2 horse1 horse2 bun45 bun180 bun270 bun315
+.SILENT: cow1 cow2
+
 cow1: cpu-all all
-	bash -c "time ./cpu_src/build/cpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt"
+	./gpu_src/build/gpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt
+	echo "\033[0;33mCPU Implementation: \033[0m"
+	bash -c "(time ./cpu_src/build/cpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt) 1>/dev/null"
+	echo "\033[0;33mGPU Implementation: \033[0m"
 	bash -c "(time ./gpu_src/build/gpu-icp data/data_students/cow_tr1.txt data/data_students/cow_ref.txt) 1>/dev/null"
 
 cow2: cpu-all all
