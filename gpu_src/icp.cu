@@ -80,9 +80,12 @@ __global__ void search_corres(const float *p, const float *m, float *y, size_t s
 
     float minD = MAX_FLOAT;
     size_t idx = 0;
+    
+    printf("pi: %f\n", pi[0]);
 
     for (size_t k = 0; k < s; k++) {
         float mk[3] = {m[i], m[i + 1], m[i + 2]};
+        printf("mi: %f\n", mk[0]);
 
         float dist = (sqrt(pow(pi[0] - mk[0], 2) + pow(pi[i + 1] - mk[i + 1], 2) +
                     pow(pi[i + 2] - mk[i + 2], 2)));
@@ -101,27 +104,27 @@ __global__ void search_corres(const float *p, const float *m, float *y, size_t s
 
 Points get_correspondences(const Points p, const Points m)
 {
-    size_t size = p.size() * sizeof(float) * 3;
+    size_t size_malloc = p.size() * sizeof(float) * 3;
 
     float *cm, *cp, *cy, *arr_y, *arr_m, *arr_p;
     
     std::cout << "before convert\n";
     arr_p = p.convert_to_f();
     arr_m = m.convert_to_f();
-    arr_y = (float*)std::malloc(size);
+    arr_y = (float*)std::malloc(size_malloc);
 
     std::cout << "afterconvert\n";
     cudaMalloc((void **) &cp, p.size() * 3);
     cudaMalloc((void **) &cm, p.size() * 3);
     cudaMalloc((void **) &cy, p.size() * 3);
 
-    cudaMemcpy(cp, arr_p, size, cudaMemcpyHostToDevice); 
-    cudaMemcpy(cm, arr_m, size, cudaMemcpyHostToDevice); 
+    cudaMemcpy(cp, arr_p, size_malloc, cudaMemcpyHostToDevice); 
+    cudaMemcpy(cm, arr_m, size_malloc, cudaMemcpyHostToDevice); 
      
-    search_corres<<<1, 4>>>(cp, cm, cy, size);
+    search_corres<<<1, 4>>>(cp, cm, cy, p.size() * 3);
     cudaDeviceSynchronize();
 
-    cudaMemcpy(arr_y, cy, size, cudaMemcpyDeviceToHost); 
+    cudaMemcpy(arr_y, cy, size_malloc, cudaMemcpyDeviceToHost); 
     
     Points y(arr_y, p.size());
     
