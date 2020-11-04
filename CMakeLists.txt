@@ -25,5 +25,5 @@ add_executable(${TARGET_NAME}
 )
 
 # libs
-find_package (Eigen3 3.3 REQUIRED NO_MODULE)
-target_link_libraries(${TARGET_NAME} m Eigen3::Eigen)
+#find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+#target_link_libraries(${TARGET_NAME} m Eigen3::Eigen)
