@@ -147,3 +147,33 @@ std::ostream &operator<<(std::ostream &os, const Points &p)
     }
     return os;
 }
+
+float *Points::convert_to_f() const
+{
+    size_t s = this->size();
+
+    float *f = (float*)std::malloc(s * sizeof(float) * 3);
+
+    for (size_t i = 0; i < s * 3; i += 3)
+    {
+        f[i] = this->points_[i].x;
+        f[i + 1] = this->points_[i].x;
+        f[i + 2] = this->points_[i].x;
+    }
+    return f;
+}
+
+Points::Points(float *f, size_t s)
+{
+    Vect3f v(0,0,0);
+
+    for (size_t i = 0; i < s * 3; i += 3)
+    {
+        v.x = f[i];
+        v.y = f[i + 1];
+        v.z = f[i + 2];
+
+        this->addPoint(v);
+    }
+
+}

@@ -32,6 +32,9 @@ class Points
     Points();
     void addPoint(Vect3f v);
     size_t size() const;
+    float* convert_to_f() const;
+    Points(float *f, size_t s);
+
     Vect3f operator[](size_t i) const;
     Vect3f &operator[](size_t i);
 };

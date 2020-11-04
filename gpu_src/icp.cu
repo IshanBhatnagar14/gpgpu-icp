@@ -68,36 +68,43 @@ alignment_t find_alignment(Points p, Points y)
     return alignment;
 }
 
-__global__ void search_corres(const Points p, const Points m, size_t &res)
+__global__ void search_corres(const Points *p, const Points *m, Points *y)
 {
-     
+    int i = blockDim.x * blockIdx.x + threadIdx.x;
+    Vect3f pi = p[i];
+    float minD = std::numeric_limits<float>::max();
+    size_t idx = 0;
+
+    for (size_t k = 0; k < size; k++) {
+        Vect3f mk = m[k];
+
+        float dist = (sqrt(pow(pi.x - mk.x, 2) + pow(pi.y - mk.y, 2) +
+                    pow(pi.z - mk.z, 2)));
+
+        if (dist < minD) {
+            minD = dist;
+            idx = k;
+        }
+    }
+
+    y.addPoint(m[idx]);    
 }
+
 
 
 Points get_correspondences(const Points p, const Points m)
 {
-    Points Y;
+    Points y;
     size_t size = p.size();
+    Points *cm, *cp, *cy;
+    cudaMalloc((void **) &cp, sizeof(Points));
+    cudaMalloc((void **) &cm, sizeof(Points));
+    cudaMalloc((void **) &cy, sizeof(Points));
 
-    for (size_t i = 0; i < size; i++) {
-        Vect3f pi = p[i];
-        float minD = std::numeric_limits<float>::max();
-        size_t idx = 0;
-
-        for (size_t k = 0; k < size; k++) {
-            Vect3f mk = m[k];
-
-            float dist = (sqrt(pow(pi.x - mk.x, 2) + pow(pi.y - mk.y, 2) +
-                               pow(pi.z - mk.z, 2)));
-
-            if (dist < minD) {
-                minD = dist;
-                idx = k;
-            }
-        }
-
-        Y.addPoint(m[idx]);
-    }
+    cudaMemcpy(p, cp, sizeof(Points), cudaMemcpyHostToDevice); 
+    cudaMemcpy(m, cy, sizeof(Points), cudaMemcpyHostToDevice); 
+    cudaMemcpy(y, cm, sizeof(Points), cudaMemcpyHostToDevice); 
+    
     return Y;
 }
 
@@ -125,7 +132,7 @@ Points apply_alignment(Points p, const Points model)
         Points y = get_correspondences(p, model);
 
         lt << "Time Elapsed after get_correspondences(): " << stop_timer(clk)
-           << "s\n";
+            << "s\n";
 
         clk = start_timer();
 
@@ -133,7 +140,7 @@ Points apply_alignment(Points p, const Points model)
         alignment_t alignment = find_alignment(p, y);
 
         lt << "Time Elapsed after find_aligment(): " << stop_timer(clk)
-           << "s\n";
+            << "s\n";
 
         float scale = std::get<float>(alignment[0]);
         Matrix rotation = std::get<Matrix>(alignment[1]);
