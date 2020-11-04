@@ -35,8 +35,8 @@ bun45: all
 bun180: all
 	./gpu_src/gpu-icp data/data_students/bun180.txt data/data_students/bun000.txt
 
-bun270: all cpu-all
+bun270: all
 	./gpu_src/gpu-icp data/data_students/bun270.txt data/data_students/bun000.txt
 
-bun315: all cpu-all
+bun315: all
 	./gpu_src/gpu-icp data/data_students/bun315.txt data/data_students/bun000.txt
