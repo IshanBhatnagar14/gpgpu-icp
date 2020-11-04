@@ -123,7 +123,7 @@ Points get_correspondences(const Points p, const Points m)
 
     cudaMemcpy(arr_y, cy, size, cudaMemcpyDeviceToHost); 
     
-    Points y(arr_y, p.size() * sizeof(float))
+    Points y(arr_y, p.size() * sizeof(float));
     
     free(arr_p);
     free(arr_m);
