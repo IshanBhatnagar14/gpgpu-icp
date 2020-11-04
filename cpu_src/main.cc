@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
     apply_alignment(p, model);
 
-    l << "find_aligment() OK" << std::endl;
+    l << "Ending..." << std::endl;
 
     return 0;
 }
