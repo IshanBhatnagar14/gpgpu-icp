@@ -1,30 +1,33 @@
 #include "icp.hh"
 
-#include <fstream>
-#include <math.h>
-#include <iostream>
 #include <cstdio>
 #include <ctime>
+<<<<<<< HEAD
 #include <cuda.h>
+=======
+#include <fstream>
+#include <iostream>
+#include <math.h>
+>>>>>>> d53a10f31dc2e1f0f49ee946a0202d376743e4e7
 
 #include "log.hh"
 
 #define MAX_ITER 16
 #define THRESH 0.00001
 
-
-std::clock_t start_timer() {
+std::clock_t start_timer()
+{
     return std::clock();
 }
 
-double stop_timer(std::clock_t start) {
-    return (std::clock() - start) / (double) CLOCKS_PER_SEC;
+double stop_timer(std::clock_t start)
+{
+    return (std::clock() - start) / (double)CLOCKS_PER_SEC;
 }
 
 //s, R, t, err
 alignment_t find_alignment(Points p, Points y)
 {
-
     Log l("Find Alignment");
     alignment_t alignment;
 
@@ -111,6 +114,9 @@ Points apply_alignment(Points p, const Points model)
 
     float final_scale = 1;
     Matrix final_rotation(3);
+    final_rotation[0][0] = 1;
+    final_rotation[1][1] = 1;
+    final_rotation[2][2] = 1;
     Vect3f final_translation(0, 0, 0);
     float final_err = 0;
 
@@ -121,15 +127,16 @@ Points apply_alignment(Points p, const Points model)
         // Compute Y
         Points y = get_correspondences(p, model);
 
-        lt << "Time Elapsed after get_correspondences(): " << stop_timer(clk) << "s\n";
+        lt << "Time Elapsed after get_correspondences(): " << stop_timer(clk)
+           << "s\n";
 
         clk = start_timer();
 
         // Find Alignment
         alignment_t alignment = find_alignment(p, y);
 
-        lt << "Time Elapsed after find_aligment(): " << stop_timer(clk) << "s\n";
-
+        lt << "Time Elapsed after find_aligment(): " << stop_timer(clk)
+           << "s\n";
 
         float scale = std::get<float>(alignment[0]);
         Matrix rotation = std::get<Matrix>(alignment[1]);
@@ -140,6 +147,7 @@ Points apply_alignment(Points p, const Points model)
         // Saving final results
         final_scale *= scale;
         final_translation = final_translation + translation;
+        final_rotation = final_rotation * rotation;
 
         // Applying (newP)
         Points newP = (scalled_rotation * p) + translation;
@@ -168,7 +176,7 @@ Points apply_alignment(Points p, const Points model)
     }
     l.title();
     l << "Final scale: " << final_scale << std::endl;
-    l << "Final rotation: TODO" << std::endl;
+    l << "Final rotation: " << final_rotation << std::endl;
     l << "Final translation: " << final_translation << std::endl;
     l << "Final error: " << final_err << std::endl;
 

@@ -1,9 +1,9 @@
-#include "../Eigen/Core"
-#include "../Eigen/Eigenvalues"
-#include "../Eigen/SVD"
 #include <cmath>
 #include <iostream>
 
+#include "../Eigen/Core"
+#include "../Eigen/Eigenvalues"
+#include "../Eigen/SVD"
 #include "icp.hh"
 #include "log.hh"
 
