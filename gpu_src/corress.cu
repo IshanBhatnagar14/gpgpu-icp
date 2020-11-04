@@ -52,7 +52,7 @@ Points get_correspondences(const Points p, const Points m)
     cudaMemcpy(cp, arr_p, size_malloc, cudaMemcpyHostToDevice); 
     cudaMemcpy(cm, arr_m, size_malloc, cudaMemcpyHostToDevice); 
      
-    search_corres<<<3, 1024>>>(cp, cm, cy, p.size() * 3);
+    search_corres<<<ceil(p.size() / 1024), 1024>>>(cp, cm, cy, p.size() * 3);
     cudaDeviceSynchronize();
 
     cudaMemcpy(arr_y, cy, size_malloc, cudaMemcpyDeviceToHost); 

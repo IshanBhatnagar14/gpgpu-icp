@@ -7,7 +7,6 @@
 
 #include "log.hh"
 
-#define MAX_FLOAT 3.40282e+038
 #define MAX_ITER 15
 #define THRESH 0.00001
 
@@ -135,11 +134,12 @@ Points apply_alignment(Points p, const Points model)
         // Applying to p
         p = newP;
     }
-    l.title();
-    l << "Final scale: " << final_scale << std::endl;
-    l << "Final rotation: " << final_rotation << std::endl;
-    l << "Final translation: " << final_translation << std::endl;
-    l << "Final error: " << final_err << std::endl;
+    Log lr("Result");
+    lr.title();
+    lr << "Final scale: " << final_scale << std::endl;
+    lr << "Final rotation: " << final_rotation << std::endl;
+    lr << "Final translation: " << final_translation << std::endl;
+    lr << "Final error: " << final_err << std::endl;
 
     dump_on_file(p, "result.txt");
 
