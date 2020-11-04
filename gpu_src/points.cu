@@ -1,5 +1,3 @@
-#include "points.hh"
-
 #include <algorithm>
 #include <fstream>
 #include <iterator>
@@ -9,6 +7,7 @@
 #include <vector>
 
 #include "log.hh"
+#include "points.hh"
 
 /*
 ** Points
@@ -150,25 +149,25 @@ std::ostream &operator<<(std::ostream &os, const Points &p)
 
 float *Points::convert_to_f() const
 {
-    size_t s = this->size();
+    size_t size = this->size();
+    size_t array_size = 3 * s;
 
-    float *f = (float*)std::malloc(s * sizeof(float) * 3);
+    float *f = (float *)std::malloc(sizeof(float) * array_size);
 
-    for (size_t i = 0; i < s * 3; i += 3)
-    {
-        f[i] = this->points_[i].x;
-        f[i + 1] = this->points_[i].y;
-        f[i + 2] = this->points_[i].z;
+    for (size_t i = 0; i < size; i++) {
+        size_t j = 3 * i;
+        f[j] = this->points_[i].x;
+        f[j + 1] = this->points_[i].y;
+        f[j + 2] = this->points_[i].z;
     }
     return f;
 }
 
 Points::Points(float *f, size_t s)
 {
-    Vect3f v(0,0,0);
+    Vect3f v(0, 0, 0);
 
-    for (size_t i = 0; i < s * 3; i += 3)
-    {
+    for (size_t i = 0; i < s * 3; i += 3) {
         v.x = f[i];
         v.y = f[i + 1];
         v.z = f[i + 2];
