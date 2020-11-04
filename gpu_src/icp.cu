@@ -11,7 +11,7 @@
 #include "log.hh"
 
 #define MAX_FLOAT 3.40282e+038
-#define MAX_ITER 16
+#define MAX_ITER 1
 #define THRESH 0.00001
 
 std::clock_t start_timer()
@@ -72,7 +72,7 @@ alignment_t find_alignment(Points p, Points y)
 
 __global__ void search_corres(const float *p, const float *m, float *y, size_t s)
 {
-    int i = blockDim.x * blockIdx.x + threadIdx.x * 3;
+    int i = blockDim.x * blockIdx.x  + threadIdx.x * 3;
     printf("i: %d\n", i);
     if (i >= s)
         return;
@@ -123,7 +123,9 @@ Points get_correspondences(const Points p, const Points m)
 
     cudaMemcpy(arr_y, cy, size, cudaMemcpyDeviceToHost); 
     
-    Points y(arr_y, p.size() * sizeof(float));
+    Points y(arr_y, p.size());
+    
+    std::cout << y.size() << "\n";
     
     free(arr_p);
     free(arr_m);
