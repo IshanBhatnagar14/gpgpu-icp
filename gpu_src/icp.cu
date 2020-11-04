@@ -123,6 +123,8 @@ Points get_correspondences(const Points p, const Points m)
 
     cudaMemcpy(arr_y, cy, size, cudaMemcpyDeviceToHost); 
     
+    Points y(arr_y, p.size() * sizeof(float))
+    
     free(arr_p);
     free(arr_m);
     free(arr_y);
@@ -130,7 +132,7 @@ Points get_correspondences(const Points p, const Points m)
     cudaFree(cm);
     cudaFree(cy);
     
-    return Points(arr_y, p.size() * sizeof(float));
+    return y;
 }
 
 //s; R; t
