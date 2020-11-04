@@ -157,8 +157,8 @@ float *Points::convert_to_f() const
     for (size_t i = 0; i < s * 3; i += 3)
     {
         f[i] = this->points_[i].x;
-        f[i + 1] = this->points_[i].x;
-        f[i + 2] = this->points_[i].x;
+        f[i + 1] = this->points_[i].y;
+        f[i + 2] = this->points_[i].z;
     }
     return f;
 }
@@ -175,5 +175,4 @@ Points::Points(float *f, size_t s)
 
         this->addPoint(v);
     }
-
 }

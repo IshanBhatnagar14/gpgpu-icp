@@ -6,9 +6,11 @@
 #include <fstream>
 #include <iostream>
 #include <math.h>
+#include <stdio.h>
 
 #include "log.hh"
 
+#define MAX_FLOAT 3.40282e+038
 #define MAX_ITER 16
 #define THRESH 0.00001
 
@@ -68,44 +70,67 @@ alignment_t find_alignment(Points p, Points y)
     return alignment;
 }
 
-__global__ void search_corres(const Points *p, const Points *m, Points *y)
+__global__ void search_corres(const float *p, const float *m, float *y, size_t s)
 {
-    int i = blockDim.x * blockIdx.x + threadIdx.x;
-    Vect3f pi = p[i];
-    float minD = std::numeric_limits<float>::max();
+    int i = blockDim.x * blockIdx.x + threadIdx.x * 3;
+    printf("i: %d\n", i);
+    if (i >= s)
+        return;
+    float pi[3] = {p[i], p[i + 1], p[i + 2]};
+
+    float minD = MAX_FLOAT;
     size_t idx = 0;
 
-    for (size_t k = 0; k < size; k++) {
-        Vect3f mk = m[k];
+    for (size_t k = 0; k < s; k++) {
+        float mk[3] = {m[i], m[i + 1], m[i + 2]};
 
-        float dist = (sqrt(pow(pi.x - mk.x, 2) + pow(pi.y - mk.y, 2) +
-                    pow(pi.z - mk.z, 2)));
+        float dist = (sqrt(pow(pi[0] - mk[0], 2) + pow(pi[i + 1] - mk[i + 1], 2) +
+                    pow(pi[i + 2] - mk[i + 2], 2)));
 
         if (dist < minD) {
             minD = dist;
             idx = k;
         }
     }
-
-    y.addPoint(m[idx]);    
+    y[i] = m[idx];
+    y[i + 1] = m[idx + 1];
+    y[i + 2] = m[idx + 2];
 }
 
 
 
 Points get_correspondences(const Points p, const Points m)
 {
-    Points y;
-    size_t size = p.size();
-    Points *cm, *cp, *cy;
-    cudaMalloc((void **) &cp, sizeof(Points));
-    cudaMalloc((void **) &cm, sizeof(Points));
-    cudaMalloc((void **) &cy, sizeof(Points));
+    size_t size = p.size() * sizeof(float) * 3;
 
-    cudaMemcpy(p, cp, sizeof(Points), cudaMemcpyHostToDevice); 
-    cudaMemcpy(m, cy, sizeof(Points), cudaMemcpyHostToDevice); 
-    cudaMemcpy(y, cm, sizeof(Points), cudaMemcpyHostToDevice); 
+    float *cm, *cp, *cy, *arr_y, *arr_m, *arr_p;
     
-    return Y;
+    std::cout << "before convert\n";
+    arr_p = p.convert_to_f();
+    arr_m = m.convert_to_f();
+    arr_y = (float*)std::malloc(size);
+
+    std::cout << "afterconvert\n";
+    cudaMalloc((void **) &cp, size);
+    cudaMalloc((void **) &cm, size);
+    cudaMalloc((void **) &cy, size);
+
+    cudaMemcpy(cp, arr_p, size, cudaMemcpyHostToDevice); 
+    cudaMemcpy(cm, arr_m, size, cudaMemcpyHostToDevice); 
+     
+    search_corres<<<3, 1024>>>(cp, cm, cy, size);
+    cudaDeviceSynchronize();
+
+    cudaMemcpy(arr_y, cy, size, cudaMemcpyDeviceToHost); 
+    
+    free(arr_p);
+    free(arr_m);
+    free(arr_y);
+    cudaFree(cp);
+    cudaFree(cm);
+    cudaFree(cy);
+    
+    return Points(arr_y, p.size() * sizeof(float));
 }
 
 //s; R; t
