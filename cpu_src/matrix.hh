@@ -24,3 +24,5 @@ class Matrix
     std::vector<float> &operator[](size_t i);
     friend std::ostream &operator<<(std::ostream &os, const Matrix &m);
 };
+
+Matrix operator*(const Matrix &m1, const Matrix &m2);
