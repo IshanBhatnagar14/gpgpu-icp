@@ -2,11 +2,8 @@
 
 #include <cstdio>
 #include <ctime>
-#include <cuda.h>
 #include <fstream>
 #include <iostream>
-#include <math.h>
-#include <stdio.h>
 
 #include "log.hh"
 
@@ -36,9 +33,7 @@ alignment_t find_alignment(Points p, Points y)
     l << "mu y: " << mu_y << std::endl;
 
     Points p_prime = create_prime(p, mu_p);
-    //l << "p prime: " << p_prime << std::endl;
     Points y_prime = create_prime(y, mu_y);
-    //l << "y prime: " << y_prime << std::endl;
     l << "primes ok" << std::endl;
 
     Matrix quaternion = get_quaternion_matrix(p_prime, y_prime);
@@ -68,79 +63,6 @@ alignment_t find_alignment(Points p, Points y)
     alignment.push_back(error);
 
     return alignment;
-}
-
-__global__ void search_corres(const float *p, const float *m, float *y, size_t s)
-{
-    int i = (blockDim.x * blockIdx.x + threadIdx.x) * 3;
-    if (i >= s)
-        return;
-    //printf("i: %d\n", i);
-    float pi[3] = {p[i], p[i + 1], p[i + 2]};
-
-    float minD = MAX_FLOAT;
-    size_t idx = 0;
-    
-    //printf("pi: %f\n", pi[0]);
-
-    for (size_t k = 0; k < s; k += 3) {
-        float mk[3] = {m[k], m[k + 1], m[k + 2]};
-        //printf("mi: %f\n", mk[0]);
-
-        float dist = (sqrt(pow(pi[0] - mk[0], 2) + pow(pi[1] - mk[1], 2) +
-                    pow(pi[2] - mk[2], 2)));
-
-        if (dist < minD) {
-            minD = dist;
-            idx = k;
-        }
-    }
-    y[i] = m[idx];
-    y[i + 1] = m[idx + 1];
-    y[i + 2] = m[idx + 2];
-    //printf("y: %f %f %f\n", y[i], y[i+1], y[i+2]);
-}
-
-
-
-Points get_correspondences(const Points p, const Points m)
-{
-    size_t size_malloc = p.size() * sizeof(float) * 3;
-
-    float *cm, *cp, *cy, *arr_y, *arr_m, *arr_p;
-    
-    std::cout << "before convert\n";
-    arr_p = p.convert_to_f();
-    arr_m = m.convert_to_f();
-    arr_y = (float*)std::malloc(size_malloc);
-
-    std::cout << "afterconvert\n";
-    cudaMalloc((void **) &cp, size_malloc);
-    cudaMalloc((void **) &cm, size_malloc);
-    cudaMalloc((void **) &cy, size_malloc);
-
-    cudaMemcpy(cp, arr_p, size_malloc, cudaMemcpyHostToDevice); 
-    cudaMemcpy(cm, arr_m, size_malloc, cudaMemcpyHostToDevice); 
-     
-    search_corres<<<3, 1024>>>(cp, cm, cy, p.size() * 3);
-    cudaDeviceSynchronize();
-
-    cudaMemcpy(arr_y, cy, size_malloc, cudaMemcpyDeviceToHost); 
-    
-    
-    std::cout << arr_y[1]<< "\n";
-    Points y(arr_y, p.size());
-    
-    std::cout << y[0].x << "\n";
-    
-    free(arr_p);
-    free(arr_m);
-    free(arr_y);
-    cudaFree(cp);
-    cudaFree(cm);
-    cudaFree(cy);
-    
-    return y;
 }
 
 //s; R; t

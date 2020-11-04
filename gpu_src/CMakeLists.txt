@@ -23,4 +23,5 @@ add_executable(${TARGET_NAME}
     matrix.cu
     alignment.cu
     icp.cu
+    corress.cu
 )

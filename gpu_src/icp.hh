@@ -1,6 +1,7 @@
 #pragma once
 
 #include <variant>
+#include <math.h>
 #include <vector>
 
 #include "matrix.hh"
@@ -18,3 +19,5 @@ float get_scaling_factor(Points Pprime, Points Yprime);
 Vect3f get_transational_offset(Vect3f mu_p, Vect3f mu_y, Matrix R);
 float residual_error(const Points p, const Points y, Matrix sr, Vect3f t);
 void dump_on_file(Points points, std::string path);
+
+Points get_correspondences(const Points p, const Points m);
