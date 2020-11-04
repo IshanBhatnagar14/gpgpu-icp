@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     Points model;
 
     if (argc < 2) {
-        p = Points("data/data_students/cow_ref.txt");
-        model = Points("data/data_students/cow_tr2.txt");
+        p = Points("../data/data_students/cow_ref.txt");
+        model = Points("../data/data_students/cow_tr2.txt");
     } else {
         p = Points(argv[1]);
         model = Points(argv[2]);
