@@ -73,9 +73,9 @@ alignment_t find_alignment(Points p, Points y)
 __global__ void search_corres(const float *p, const float *m, float *y, size_t s)
 {
     int i = blockDim.x * blockIdx.x  + threadIdx.x * 3;
-    printf("i: %d\n", i);
     if (i >= s)
         return;
+    printf("i: %d\n", i);
     float pi[3] = {p[i], p[i + 1], p[i + 2]};
 
     float minD = MAX_FLOAT;
@@ -118,7 +118,7 @@ Points get_correspondences(const Points p, const Points m)
     cudaMemcpy(cp, arr_p, size, cudaMemcpyHostToDevice); 
     cudaMemcpy(cm, arr_m, size, cudaMemcpyHostToDevice); 
      
-    search_corres<<<3, 1024>>>(cp, cm, cy, size);
+    search_corres<<<1, 4>>>(cp, cm, cy, size);
     cudaDeviceSynchronize();
 
     cudaMemcpy(arr_y, cy, size, cudaMemcpyDeviceToHost); 
