@@ -20,3 +20,10 @@ check: clean all
 clean:
 	rm -rf $(DIR)
 	$(RM) result*.txt
+
+
+cow1: all
+	./$(DIR)/$(EXEC) data/data_students/cow_ref.txt data/data_students/cow_tr1.txt
+
+cow2: all
+	./$(DIR)/$(EXEC) data/data_students/cow_ref.txt data/data_students/cow_tr2.txt
