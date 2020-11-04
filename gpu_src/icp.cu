@@ -1,10 +1,9 @@
-#include "icp.hh"
-
 #include <cstdio>
 #include <ctime>
 #include <fstream>
 #include <iostream>
 
+#include "icp.hh"
 #include "log.hh"
 
 #define MAX_ITER 15
@@ -88,7 +87,7 @@ Points apply_alignment(Points p, const Points model)
         Points y = get_correspondences(p, model);
 
         lt << "Time Elapsed after get_correspondences(): " << stop_timer(clk)
-            << "s\n";
+           << "s\n";
 
         clk = start_timer();
 
@@ -96,7 +95,7 @@ Points apply_alignment(Points p, const Points model)
         alignment_t alignment = find_alignment(p, y);
 
         lt << "Time Elapsed after find_aligment(): " << stop_timer(clk)
-            << "s\n";
+           << "s\n";
 
         float scale = std::get<float>(alignment[0]);
         Matrix rotation = std::get<Matrix>(alignment[1]);

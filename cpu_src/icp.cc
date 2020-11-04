@@ -34,7 +34,7 @@ alignment_t find_alignment(Points p, Points y)
 
     Points p_prime = create_prime(p, mu_p);
     Points y_prime = create_prime(y, mu_y);
-    
+
     l << "primes ok" << std::endl;
 
     Matrix quaternion = get_quaternion_matrix(p_prime, y_prime);

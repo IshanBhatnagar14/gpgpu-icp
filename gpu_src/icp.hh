@@ -1,7 +1,7 @@
 #pragma once
 
-#include <variant>
 #include <math.h>
+#include <variant>
 #include <vector>
 
 #include "matrix.hh"

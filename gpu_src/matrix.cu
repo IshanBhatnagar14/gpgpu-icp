@@ -1,6 +1,6 @@
-#include "matrix.hh"
-
 #include <iostream>
+
+#include "matrix.hh"
 
 Matrix::Matrix(size_t width, size_t height)
     : width_(width)
