@@ -1,29 +1,22 @@
 MAKEFLAGS += --no-print-directory
-EXEC = gpgpu-icp
-DIR = build
 
-.PHONY: all, check, clean, run
+.PHONY: all check cpu-all cpu-check
 
-all: build
-	make -C $(DIR);
+all check:
+	$(MAKE) -C gpu_src "$@";
 
-$(DIR):
-	mkdir $(DIR)
-	cd $(DIR); cmake ..; cd ..
-
-run: all
-	./$(DIR)/$(EXEC)
-
-check: clean all
-	./$(DIR)/$(EXEC)
+cpu-all cpu-check:
+	$(MAKE) -C cpu_src "$@";
 
 clean:
-	rm -rf $(DIR)
-	$(RM) result*.txt
+	$(MAKE) -C gpu_src clean;
+	$(MAKE) -C cpu_src cpu-clean;
 
 
-cow1: all
-	./$(DIR)/$(EXEC) data/data_students/cow_ref.txt data/data_students/cow_tr1.txt
+# BENCHMARKS
 
-cow2: all
-	./$(DIR)/$(EXEC) data/data_students/cow_ref.txt data/data_students/cow_tr2.txt
+#cow1: all
+#	./$(DIR)/$(EXEC) data/data_students/cow_ref.txt data/data_students/cow_tr1.txt
+#
+#cow2: all
+#	./$(DIR)/$(EXEC) data/data_students/cow_ref.txt data/data_students/cow_tr2.txt
