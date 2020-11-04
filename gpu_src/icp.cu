@@ -87,8 +87,8 @@ __global__ void search_corres(const float *p, const float *m, float *y, size_t s
         float mk[3] = {m[k], m[k + 1], m[k + 2]};
         //printf("mi: %f\n", mk[0]);
 
-        float dist = (sqrt(pow(pi[0] - mk[0], 2) + pow(pi[i + 1] - mk[i + 1], 2) +
-                    pow(pi[i + 2] - mk[i + 2], 2)));
+        float dist = (sqrt(pow(pi[0] - mk[0], 2) + pow(pi[1] - mk[1], 2) +
+                    pow(pi[2] - mk[2], 2)));
 
         if (dist < minD) {
             minD = dist;
@@ -98,7 +98,7 @@ __global__ void search_corres(const float *p, const float *m, float *y, size_t s
     y[i] = m[idx];
     y[i + 1] = m[idx + 1];
     y[i + 2] = m[idx + 2];
-    printf("y: %f %f %f\n", y[i], y[i+1], y[i+2]);
+    //printf("y: %f %f %f\n", y[i], y[i+1], y[i+2]);
 }
 
 
