@@ -111,9 +111,9 @@ Points get_correspondences(const Points p, const Points m)
     arr_y = (float*)std::malloc(size);
 
     std::cout << "afterconvert\n";
-    cudaMalloc((void **) &cp, size);
-    cudaMalloc((void **) &cm, size);
-    cudaMalloc((void **) &cy, size);
+    cudaMalloc((void **) &cp, p.size() * 3);
+    cudaMalloc((void **) &cm, p.size() * 3);
+    cudaMalloc((void **) &cy, p.size() * 3);
 
     cudaMemcpy(cp, arr_p, size, cudaMemcpyHostToDevice); 
     cudaMemcpy(cm, arr_m, size, cudaMemcpyHostToDevice); 
