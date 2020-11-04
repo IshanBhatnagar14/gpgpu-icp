@@ -1,19 +1,37 @@
 GPGPU Iterative Closest Point Algorithm
 =======================================
 
-## Steps
-1. get_correspondence_indices()
-2. center_data()
-3. compute_cross_covariance()
-4. icp_svd()
-5. jacobian, error, dr, R, etc
-6. icp_least_squares() + prepare_system()
-7. compute_normals() + plot_normals()
-8. RotationMatrix()
-9. icp_normal() + prepare_system_normals()
-10. kernel()
+## Usage
 
-Bon Chance
+### CPU
+
+`make cpu-all`: builds the sources with the CPU CMakeList.txt
+
+`make cpu-check`: builds and the sources with the CPU CMakeList.txt
+
+`make cpu-clean`: cleans the cpu_src directory
+
+
+### GPU
+
+`make all`: builds the sources with the GPU CMakeList.txt
+
+`make check`: builds and the sources with the GPU CMakeList.txt
+
+`make clean`: cleans the gpu_src directory
+
+
+### Benchmark
+
+Timed benchmark :
+
+`make cow1`
+
+`make cow2`
+
+Test set execution :
+
+`make horse1/horse2/bun45/bun180/bun270/bun315`
 
 
 ## Resource
