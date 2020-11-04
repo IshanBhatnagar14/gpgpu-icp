@@ -150,7 +150,7 @@ std::ostream &operator<<(std::ostream &os, const Points &p)
 float *Points::convert_to_f() const
 {
     size_t size = this->size();
-    size_t array_size = 3 * s;
+    size_t array_size = 3 * size;
 
     float *f = (float *)std::malloc(sizeof(float) * array_size);
 
