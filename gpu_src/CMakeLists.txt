@@ -1,9 +1,10 @@
 # cmake
 cmake_minimum_required(VERSION 2.8)
+project(cmake_and_cuda LANGUAGES CXX CUDA)
 
 # project
 set(TARGET_NAME gpu-icp)
-project(${TARGET_NAME})
+# project(${TARGET_NAME})
 
 # compilations
 set(CMAKE_CXX_COMPILER "nvcc")
